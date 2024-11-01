@@ -4,21 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FCFS Scheduling Gantt Chart with Adaptive Timeline</title>
+    <title>Custom FCFS Scheduling Gantt Chart</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>First-Come, First-Served (FCFS) Scheduling - Gantt Chart</h1>
-    <div class="timeline" id="timeline">
-        <!-- Timeline markers will appear here -->
-    </div>
-    <div class="gantt-chart" id="ganttChart">
-        <!-- Process bars will appear here -->
-    </div>
-    <button id="startButton">Start</button>
+    <h1>First-Come, First-Served (FCFS) Scheduling - Custom Gantt Chart</h1>
 
-    <!-- Link to the external JavaScript file -->
+    <div id="processInputContainer">
+        <label for="numProcesses">Number of Processes:</label>
+        <input type="number" id="numProcesses" min="1" value="1" required>
+        <button onclick="generateProcessFields()">Generate Process Fields</button>
+    </div>
+
+    <form id="processForm" style="display: none;">
+        <div id="processFieldsContainer"></div>
+        <button type="button" onclick="startScheduling()">Start Scheduling</button>
+    </form>
+
+    <div class="timeline" id="timeline"></div>
+    <div class="gantt-chart" id="ganttChart"></div>
+
     <script src="script.js"></script>
 </body>
 
