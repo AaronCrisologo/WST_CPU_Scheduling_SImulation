@@ -64,6 +64,7 @@ function sjfScheduling() {
     const totalProcesses = processes.length;
     let completedProcesses = 0;
     const isCompleted = new Array(totalProcesses).fill(false); // Track completed processes
+    const executionOrder = []; // Store the order of execution
 
     while (completedProcesses < totalProcesses) {
         const availableProcesses = getAvailableProcesses(currentTime, isCompleted);
@@ -81,13 +82,16 @@ function sjfScheduling() {
             // Mark process as completed
             isCompleted[selectedIndex] = true;
             completedProcesses++;
+
+            // Record the execution order
+            executionOrder.push(selectedProcess); // Store executed process
         } else {
             currentTime++; // If no processes are available, increment current time
         }
     }
 
-    // Create Gantt chart and display results
-    createGanttChart();
+    // Create Gantt chart and display results using execution order
+    createGanttChart(executionOrder);
     displayResults();
 }
 
@@ -113,12 +117,12 @@ function selectNextProcess(availableProcesses) {
 }
 
 // Create Gantt Chart
-function createGanttChart() {
+function createGanttChart(executionOrder) {
     ganttChart.innerHTML = ""; // Clear previous chart
     let totalBurstTime = processes.reduce((sum, p) => sum + p.burstTime, 0);
     let currentPosition = 0; // Track the position for each process
 
-    processes.forEach((process) => {
+    executionOrder.forEach((process) => {
         const processBar = document.createElement("div");
         processBar.classList.add("process-bar");
 
