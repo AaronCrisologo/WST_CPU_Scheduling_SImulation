@@ -7,6 +7,7 @@ const processForm = document.getElementById("processForm");
 const processFieldsContainer = document.getElementById("processFieldsContainer");
 const ganttChart = document.getElementById("ganttChart");
 const timeline = document.getElementById("timeline");
+const resultsContainer = document.getElementById("resultsContainer");
 
 // Generate input fields for each process
 function generateProcessFields() {
@@ -28,7 +29,7 @@ function generateProcessFields() {
         processFieldsContainer.appendChild(processField);
     }
 
-    processForm.style.display = "block";
+    processForm.style.display = "block"; // Show the form after generating fields
 }
 
 // Start scheduling with user-defined processes
@@ -36,6 +37,7 @@ function startScheduling() {
     processes = [];
     ganttChart.innerHTML = "";
     timeline.innerHTML = "";
+    resultsContainer.innerHTML = ""; // Clear previous results
 
     const arrivalTimes = document.querySelectorAll(".arrivalTime");
     const burstTimes = document.querySelectorAll(".burstTime");
@@ -47,12 +49,17 @@ function startScheduling() {
             arrivalTime: parseInt(arrivalTimes[i].value),
             burstTime: parseInt(burstTimes[i].value),
             priority: parseInt(priorities[i].value),
-            color: getRandomColor()
+            color: getRandomColor(),
+            endTime: 0, // Initialize end time
+            turnaroundTime: 0, // Initialize turnaround time
+            waitingTime: 0 // Initialize waiting time
         });
     }
 
+    // Sort processes by arrival time
     processes.sort((a, b) => a.arrivalTime - b.arrivalTime);
 
+    // Initialize chart and animate
     initializeGanttChart();
     createTimeline();
     animateGanttChart();
@@ -68,8 +75,10 @@ function getRandomColor() {
     return color;
 }
 
-// Create a timeline based on total burst time
+// Create a timeline based on processes
 function createTimeline() {
+    timeline.innerHTML = ""; // Clear existing timeline markers
+
     const totalBurstTime = processes.reduce((acc, process) => acc + process.burstTime, 0);
     let currentTime = 0;
 
@@ -77,25 +86,29 @@ function createTimeline() {
         const marker = document.createElement("div");
         marker.classList.add("timeline-marker");
 
-        const markerWidth = (process.burstTime / totalBurstTime) * 100;
-        marker.style.width = `${markerWidth}%`;
+        // Calculate position of the marker as a percentage of total width
+        const leftOffset = (currentTime / totalBurstTime) * 100;
+        marker.style.left = `${leftOffset}%`;
+
+        // Display the current time for each marker
         marker.textContent = `${currentTime}s`;
         timeline.appendChild(marker);
 
+        // Increment current time by burst time for the next marker position
         currentTime += process.burstTime;
     });
 
+    // Add final end time marker
     const endMarker = document.createElement("div");
     endMarker.classList.add("timeline-marker");
-    endMarker.textContent = `${totalBurstTime}s`;
+    endMarker.style.left = "100%";
+    endMarker.textContent = `${currentTime}s`; // Total time
     timeline.appendChild(endMarker);
 }
 
-// Initialize Gantt Chart display with hidden processes
+// Initialize Gantt Chart display
 function initializeGanttChart() {
     ganttChart.innerHTML = "";
-
-    const totalBurstTime = processes.reduce((acc, process) => acc + process.burstTime, 0);
 
     processes.forEach(process => {
         const processBar = document.createElement("div");
@@ -107,7 +120,7 @@ function initializeGanttChart() {
     });
 }
 
-// Animate Gantt Chart with slower animation and sequential process display
+// Animate Gantt Chart with sequential process display
 async function animateGanttChart() {
     const processBars = document.querySelectorAll(".process-bar");
     let currentTime = 0;
@@ -116,9 +129,10 @@ async function animateGanttChart() {
         const process = processes[i];
         const processBar = processBars[i];
         const burstTime = process.burstTime;
-        const targetWidth = (burstTime / processes.reduce((sum, p) => sum + p.burstTime, 0)) * 100;
+        const totalBurstTime = processes.reduce((sum, p) => sum + p.burstTime, 0);
+        const targetWidth = (burstTime / totalBurstTime) * 100;
 
-        // Show each process bar gradually
+        // Gradually show each process bar
         await new Promise(resolve => {
             let currentWidth = 0;
             const interval = setInterval(() => {
@@ -129,9 +143,46 @@ async function animateGanttChart() {
                     clearInterval(interval);
                     resolve();
                 }
-            }, 50); // Interval adjusted for slower animation
+            }, 50); // Adjusted interval for slower animation
         });
 
+        // Update times
         currentTime += burstTime;
+        process.endTime = currentTime; // Set end time
+        process.turnaroundTime = process.endTime - process.arrivalTime; // Calculate turnaround time
+        process.waitingTime = process.turnaroundTime - process.burstTime; // Calculate waiting time
     }
+
+    // Display results in a table after animation
+    displayResults();
+}
+
+// Display results in a table
+function displayResults() {
+    const table = document.createElement("table");
+    table.innerHTML = `
+        <tr>
+            <th>Process</th>
+            <th>Arrival Time (s)</th>
+            <th>Burst Time (s)</th>
+            <th>End Time (s)</th>
+            <th>Turnaround Time (s)</th>
+            <th>Waiting Time (s)</th>
+        </tr>
+    `;
+
+    processes.forEach(process => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${process.name}</td>
+            <td>${process.arrivalTime}</td>
+            <td>${process.burstTime}</td>
+            <td>${process.endTime}</td>
+            <td>${process.turnaroundTime}</td>
+            <td>${process.waitingTime}</td>
+        `;
+        table.appendChild(row);
+    });
+
+    resultsContainer.appendChild(table);
 }

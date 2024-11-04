@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#processInputContainer {
+    margin-bottom: 20px;
+}
+
+.process-field {
+    margin: 10px 0;
+}
+
+.timeline {
+    position: relative;
+    height: 30px;
+    background: transparent;
+    margin: 20px 0;
+}
+
+.timeline-marker {
+    position: absolute;
+    height: 100%;
+    background: transparent;
+    /* Blue for timeline markers */
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transform: translate(-50%, 0);
+    /* Center markers */
+}
+
+.gantt-chart {
+    position: relative;
+    height: 50px;
+    border: 1px solid #ccc;
+}
+
+.process-bar {
+    position: absolute;
+    /* Keep this to allow left positioning */
+    height: 100%;
+    color: white;
+    /* Text color */
+    text-align: center;
+    /* Center text */
+    line-height: 50px;
+    /* Center text vertically */
+    transition: width 1s ease;
+    /* Smooth transition for width */
+}
+
+#result-container {
+    display: flex;
+    align-items: center;
+}

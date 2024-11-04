@@ -5,46 +5,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.timeline {
-    display: flex;
-    width: 80%;
-    justify-content: space-between;
-    font-size: 12px;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.timeline-marker {
-    text-align: center;
-}
-
-.gantt-chart {
-    position: relative;
-    width: 80%;
-    height: 50px;
-    border: 1px solid #333;
-    background-color: #f9f9f9;
-    overflow: hidden;
-    margin-top: 10px;
-    display: flex;
-}
-
-.process-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #fff;
-    height: 100%;
-}
-
-#startButton {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
 #processInputContainer {
     display: flex;
     gap: 10px;
@@ -63,6 +23,67 @@ body {
     gap: 10px;
 }
 
+/* Center the timeline and Gantt chart */
+#ganttChart,
+#timeline {
+    width: 80%;
+    margin-top: 10px;
+    position: relative;
+}
+
+#timeline {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #333;
+    position: relative;
+}
+
+.timeline-marker {
+    position: absolute;
+    top: -20px;
+    /* Position closer to the top of the chart */
+    font-size: 0.9em;
+    color: #333;
+    transform: translateX(-50%);
+    /* Centers the marker above the position */
+}
+
+.gantt-chart {
+    position: relative;
+    width: 80%;
+    height: 50px;
+    border: 1px solid #333;
+    background-color: #f9f9f9;
+    display: flex;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+/* Styling for each process bar */
+.process-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Center the Start Scheduling button */
+#startButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    align-self: center;
+    /* Center the button */
+}
+
+/* Label styling */
 label {
     font-size: 14px;
 }
