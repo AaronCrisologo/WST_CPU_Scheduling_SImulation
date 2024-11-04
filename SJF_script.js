@@ -12,7 +12,7 @@ const resultsContainer = document.getElementById("resultsContainer");
 // Generate input fields for each process
 function generateProcessFields() {
     const numProcesses = parseInt(numProcessesInput.value);
-    processFieldsContainer.innerHTML = "";
+    processFieldsContainer.innerHTML = ""; // Clear previous fields
 
     for (let i = 1; i <= numProcesses; i++) {
         const processField = document.createElement("div");
@@ -23,6 +23,8 @@ function generateProcessFields() {
             <input type="number" class="arrivalTime" min="0" value="0" required>
             <label>Burst Time (s):</label>
             <input type="number" class="burstTime" min="1" value="1" required>
+            <label>Priority:</label>
+            <input type="number" class="priority" min="1" value="1" required>
         `;
         processFieldsContainer.appendChild(processField);
     }
@@ -33,21 +35,23 @@ function generateProcessFields() {
 // Start scheduling with user-defined processes
 function startScheduling() {
     processes = [];
-    ganttChart.innerHTML = "";
-    timeline.innerHTML = "";
+    ganttChart.innerHTML = ""; // Clear previous Gantt chart
+    timeline.innerHTML = ""; // Clear previous timeline
     resultsContainer.innerHTML = ""; // Clear previous results
 
     const arrivalTimes = document.querySelectorAll(".arrivalTime");
     const burstTimes = document.querySelectorAll(".burstTime");
+    const priorityLevels = document.querySelectorAll(".priority");
 
     for (let i = 0; i < arrivalTimes.length; i++) {
         processes.push({
             name: `P${i + 1}`,
             arrivalTime: parseInt(arrivalTimes[i].value),
             burstTime: parseInt(burstTimes[i].value),
-            endTime: 0, // Initialize end time
-            turnaroundTime: 0, // Initialize turnaround time
-            waitingTime: 0 // Initialize waiting time
+            priority: parseInt(priorityLevels[i].value),
+            endTime: 0,
+            turnaroundTime: 0,
+            waitingTime: 0
         });
     }
 
@@ -62,16 +66,14 @@ function sjfScheduling() {
     const isCompleted = new Array(totalProcesses).fill(false); // Track completed processes
 
     while (completedProcesses < totalProcesses) {
-        // Check for newly arrived processes
         const availableProcesses = getAvailableProcesses(currentTime, isCompleted);
 
         if (availableProcesses.length > 0) {
-            // Select the next process to run
             const selectedIndex = selectNextProcess(availableProcesses);
             const selectedProcess = processes[selectedIndex];
 
             // Update process times
-            currentTime += selectedProcess.burstTime; // Increment current time by burst time
+            currentTime += selectedProcess.burstTime; // Increment current time
             processes[selectedIndex].endTime = currentTime; // Set end time
             processes[selectedIndex].turnaroundTime = currentTime - processes[selectedIndex].arrivalTime; // Calculate turnaround time
             processes[selectedIndex].waitingTime = processes[selectedIndex].turnaroundTime - selectedProcess.burstTime; // Calculate waiting time
@@ -80,8 +82,7 @@ function sjfScheduling() {
             isCompleted[selectedIndex] = true;
             completedProcesses++;
         } else {
-            // If no processes are available, increment current time
-            currentTime++;
+            currentTime++; // If no processes are available, increment current time
         }
     }
 
@@ -90,14 +91,14 @@ function sjfScheduling() {
     displayResults();
 }
 
-// Function to get all processes that have arrived and are not completed
+// Get all processes that have arrived and are not completed
 function getAvailableProcesses(currentTime, isCompleted) {
     return processes.map((process, index) => {
         return process.arrivalTime <= currentTime && !isCompleted[index] ? index : -1;
     }).filter(index => index !== -1);
 }
 
-// Function to select the next process to run based on the shortest burst time
+// Select the next process to run based on the shortest burst time
 function selectNextProcess(availableProcesses) {
     // Sort available processes by burst time, then by arrival time
     availableProcesses.sort((a, b) => {
@@ -113,8 +114,7 @@ function selectNextProcess(availableProcesses) {
 
 // Create Gantt Chart
 function createGanttChart() {
-    ganttChart.innerHTML = "";
-
+    ganttChart.innerHTML = ""; // Clear previous chart
     let totalBurstTime = processes.reduce((sum, p) => sum + p.burstTime, 0);
     let currentPosition = 0; // Track the position for each process
 

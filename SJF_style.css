@@ -1,6 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 0;
+    /* Remove default margin */
+    padding: 20px;
+    /* Add padding for aesthetics */
 }
 
 h1 {
@@ -18,15 +21,17 @@ h1 {
 .timeline {
     position: relative;
     height: 30px;
+    /* Adjust as needed */
     background: transparent;
     margin: 20px 0;
+    border: none;
+    /* Optional for visibility */
 }
 
 .timeline-marker {
     position: absolute;
-    height: 100%;
-    background: transparent;
-    /* Blue for timeline markers */
+    height: 20px;
+    /* Adjust as needed */
     color: black;
     display: flex;
     align-items: center;
@@ -36,27 +41,30 @@ h1 {
     /* Center markers */
 }
 
-.gantt-chart {
+#ganttChart {
     position: relative;
-    height: 50px;
-    border: 1px solid #ccc;
+    width: 100vw;
+    /* Use full width of the viewport */
+    height: 100px;
+    /* Set height to match border thickness */
+    border: 1px solid #000;
+    /* Gantt chart border */
+    overflow: hidden;
+    /* Prevent overflow from process bars */
+    background-color: #e0e0e0;
+    /* Optional for better visibility */
 }
 
 .process-bar {
     position: absolute;
-    /* Keep this to allow left positioning */
     height: 100%;
+    /* Match the height of the Gantt chart */
     color: white;
-    /* Text color */
     text-align: center;
-    /* Center text */
-    line-height: 50px;
-    /* Center text vertically */
-    transition: width 1s ease;
-    /* Smooth transition for width */
-}
-
-#result-container {
-    display: flex;
-    align-items: center;
+    transition: width 0.5s ease;
+    /* Smooth transition for width changes */
+    min-width: 5%;
+    /* Set a minimum width to ensure visibility */
+    line-height: 100px;
+    /* Center text vertically within the bar */
 }
