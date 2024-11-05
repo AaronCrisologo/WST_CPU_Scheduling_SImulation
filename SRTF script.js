@@ -2,7 +2,7 @@ let processes = [];
 let animationInterval;
 
 // Constants
-const ANIMATION_DURATION_PER_UNIT = 100; // Duration for each time unit in milliseconds
+const ANIMATION_DURATION_PER_UNIT = 500; // Duration for each time unit in milliseconds
 
 const numProcessesInput = document.getElementById("numProcesses");
 const processFieldsContainer = document.getElementById("processFieldsContainer");
