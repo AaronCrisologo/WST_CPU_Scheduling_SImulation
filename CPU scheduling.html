@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scheduling Algorithm</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      /* Set background image */
+      background-image: url('bg.jpg'); /* Replace with your image path */
+      background-size: cover; /* Ensures the image covers the entire page */
+      background-position: center; /* Centers the image */
+      background-repeat: no-repeat; /* Prevents the image from repeating */
+      background-attachment: fixed; /* Keeps the background fixed when scrolling */
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0; /* Removes default body margin */
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.8); /* Transparent white background for the content */
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    /* Your other styles */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    h3 { color: #555; font-weight: 500; margin-top: 20px; }
+    .table-container, .result-container { margin-top: 20px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 12px; border: 1px solid #e0e6ed; text-align: center; }
+    th { background-color: #f2f5fa; font-weight: 600; }
+    td input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; text-align: center; }
+    .action-buttons, .dropdown-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+    button { padding: 12px 20px; font-size: 1em; color: #ffffff; background-color: #4a90e2; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s; }
+    button:hover { background-color: #357abd; }
+    .dropdown { padding: 10px; font-size: 1em; border: 1px solid #ddd; border-radius: 6px; width: 100%; max-width: 250px; }
+    #averageResults { margin-top: 15px; font-weight: bold; text-align: center; }
+    #averageResults p { margin: 5px 0; }
+    .history-drossssssssssssssssssssssssssspdown { position: absolute; top: 20px; right: 20px; padding: 10px; font-size: 1em; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; }
+
+    /* Gantt chart styles */
+    .gantt-chart { width: 100%; height: 50px; margin-top: 20px; background-color: #f0f4f8; border: 1px solid #ddd; border-radius: 6px; position: relative; }
+    .gantt-bar { position: absolute; height: 100%; background-color: #4a90e2; border-radius: 6px; color: white; display: flex; justify-content: center; align-items: center; padding: 0 5px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+
+  <div class="container">
+    <h1>Scheduling Algorithm</h1>
+  
+    <!-- History Dropdown -->
+    <select id="historyDropdown" class="history-dropdown" onchange="loadHistory()">
+      <option value="">History</option>
+    </select>
+  
+    <!-- Main page selection -->
+    <div id="mainSelection">
+      <h3>Choose an Option</h3>
+      <div class="action-buttons">
+        <button onclick="showCompute()">Compute</button>
+        <button onclick="showComparison()">Comparison</button>
+      </div>
+    </div>
+  
+    <!-- Compute Section -->
+    <div id="computeSection" style="display: none;">
+      <h3>Compute Scheduling Algorithm</h3>
+      <div class="table-container">
+        <table id="processTable">
+          <thead>
+            <tr>
+              <th>Process ID</th>
+              <th>Arrival Time</th>
+              <th>Burst Time</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Process rows will be added here -->
+          </tbody>
+        </table>
+        <div class="action-buttons">
+          <button onclick="addProcessRow()">Add Process</button>
+        </div>
+      </div>
+  
+      <!-- Algorithm Selection -->
+      <div class="dropdown-container">
+        <select id="algorithmSelect" class="dropdown">
+          <option value="FCFS">First Come First Serve (FCFS)</option>
+          <option value="SJF">Shortest Job First (SJF)</option>
+          <option value="LJF">Longest Job First (LJF)</option>
+          <option value="Priority">Priority Scheduling</option>
+          <option value="RoundRobin">Round Robin</option>
+          <option value="SRTF">Shortest Remaining Time First (SRTF)</option>
+        </select>
+        <button onclick="calculate()">Calculate</button>
+      </div>
+  
+      <!-- Gantt Chart (before results table) -->
+      <div id="ganttChart" class="gantt-chart" style="display: none;">
+        <!-- Gantt Bars will be added here -->
+      </div>
+  
+      <!-- Results Table -->
+      <div class="result-container" id="resultContainer" style="display: none;">
+        <h3>Results</h3>
+        <table id="resultTable">
+          <thead>
+            <tr>
+              <th>Process ID</th>
+              <th>Arrival Time</th>
+              <th>Burst Time</th>
+              <th>End Time</th>
+              <th>Turnaround Time</th>
+              <th>Waiting Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Result rows will be added here -->
+          </tbody>
+        </table>
+        <div id="averageResults">
+          <p>Average Turnaround Time: <span id="avgTAT">0</span></p>
+          <p>Average Waiting Time: <span id="avgWT">0</span></p>
+        </div>
+        <div class="action-buttons">
+          <button onclick="goBack()" id="backButton">Back</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Comparison Section -->
+    <div id="comparisonSection" style="display: none;">
+      <h3>Compare Scheduling Algorithms</h3>
+      <div class="table-container">
+        <table id="comparisonTable">
+          <thead>
+            <tr>
+              <th>Process ID</th>
+              <th>Arrival Time</th>
+              <th>Burst Time</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Comparison rows will be added here -->
+          </tbody>
+        </table>
+      </div>
+      <div class="action-buttons">
+        <button onclick="addComparisonProcessRow()">Add Process</button>
+      </div>
+      <div class="dropdown-container">
+        <select id="algorithm1Select" class="dropdown">
+          <option value="FCFS">First Come First Serve (FCFS)</option>
+          <option value="SJF">Shortest Job First (SJF)</option>
+          <option value="LJF">Longest Job First (LJF)</option>
+          <option value="Priority">Priority Scheduling</option>
+          <option value="RoundRobin">Round Robin</option>
+          <option value="SRTF">Shortest Remaining Time First (SRTF)</option>
+        </select>
+        <select id="algorithm2Select" class="dropdown">
+          <option value="FCFS">First Come First Serve (FCFS)</option>
+          <option value="SJF">Shortest Job First (SJF)</option>
+          <option value="LJF">Longest Job First (LJF)</option>
+          <option value="Priority">Priority Scheduling</option>
+          <option value="RoundRobin">Round Robin</option>
+          <option value="SRTF">Shortest Remaining Time First (SRTF)</option>
+        </select>
+        <button onclick="compareAlgorithms()">Compare</button>
+      </div>
+      <div class="action-buttons">
+        <button onclick="goBack()" id="backButton">Back</button>
+      </div>
+    </div>
+  </div>
+  
+
+<script>
+  let processCounter = 1;
+
+  function showCompute() {
+    document.getElementById('mainSelection').style.display = 'none';
+    document.getElementById('computeSection').style.display = 'block';
+  }
+
+  function showComparison() {
+    document.getElementById('mainSelection').style.display = 'none';
+    document.getElementById('comparisonSection').style.display = 'block';
+  }
+
+  function goBack() {
+    document.getElementById('computeSection').style.display = 'none';
+    document.getElementById('comparisonSection').style.display = 'none';
+    document.getElementById('mainSelection').style.display = 'block';
+  }
+
+  function addProcessRow() {
+    const tableBody = document.getElementById('processTable').getElementsByTagName('tbody')[0];
+    const row = tableBody.insertRow();
+    row.innerHTML = `
+      <td><input type="text" value="P${processCounter}" readonly></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+    `;
+    processCounter++;
+  }
+
+  function calculate() {
+    const resultTableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+    resultTableBody.innerHTML = ''; // Clear previous results
+    const ganttChart = document.getElementById('ganttChart');
+    ganttChart.innerHTML = ''; // Clear previous gantt bars
+
+    const processes = [];
+    for (let i = 1; i < processCounter; i++) {
+      const arrivalTime = parseInt(document.getElementById('processTable').rows[i].cells[1].childNodes[0].value);
+      const burstTime = parseInt(document.getElementById('processTable').rows[i].cells[2].childNodes[0].value);
+      const priority = parseInt(document.getElementById('processTable').rows[i].cells[3].childNodes[0].value);
+      processes.push({ id: `P${i}`, arrivalTime, burstTime, priority });
+    }
+
+    // Sort processes based on selected algorithm
+    const selectedAlgorithm = document.getElementById('algorithmSelect').value;
+
+    if (selectedAlgorithm === "FCFS") {
+      processes.sort((a, b) => a.arrivalTime - b.arrivalTime);
+    } else if (selectedAlgorithm === "SJF") {
+      processes.sort((a, b) => a.burstTime - b.burstTime);
+    }
+
+    let totalTAT = 0, totalWT = 0, currentTime = 0;
+
+    processes.forEach((process, index) => {
+      const endTime = currentTime + process.burstTime;
+      const turnaroundTime = endTime - process.arrivalTime;
+      const waitingTime = turnaroundTime - process.burstTime;
+
+      totalTAT += turnaroundTime;
+      totalWT += waitingTime;
+
+      // Insert result row
+      const row = resultTableBody.insertRow();
+      row.innerHTML = `
+        <td>${process.id}</td>
+        <td>${process.arrivalTime}</td>
+        <td>${process.burstTime}</td>
+        <td>${endTime}</td>
+        <td>${turnaroundTime}</td>
+        <td>${waitingTime}</td>
+      `;
+
+      // Create Gantt bars for each process
+      const ganttBar = document.createElement('div');
+      ganttBar.classList.add('gantt-bar');
+      ganttBar.style.left = `${index * 100}px`; // Adjust position
+      ganttBar.style.width = `${process.burstTime * 10}px`; // Adjust width
+      ganttBar.textContent = process.id;
+      ganttChart.appendChild(ganttBar);
+
+      currentTime = endTime;
+    });
+
+    const avgTAT = totalTAT / processes.length;
+    const avgWT = totalWT / processes.length;
+
+    document.getElementById('avgTAT').textContent = avgTAT.toFixed(2);
+    document.getElementById('avgWT').textContent = avgWT.toFixed(2);
+
+    document.getElementById('resultContainer').style.display = 'block';
+    document.getElementById('ganttChart').style.display = 'block';
+  }
+
+  function compareAlgorithms() {
+    alert("Comparison logic goes here.");
+  }
+
+  function addComparisonProcessRow() {
+    const tableBody = document.getElementById('comparisonTable').getElementsByTagName('tbody')[0];
+    const row = tableBody.insertRow();
+    row.innerHTML = `
+      <td><input type="text" value="P${processCounter}" readonly></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+    `;
+    processCounter++;
+  }
+</script>
+
+</body>
+</html>
