@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD:CPU scheduling.html
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scheduling Algorithm</title>
@@ -55,6 +56,12 @@
     .gantt-chart { width: 100%; height: 50px; margin-top: 20px; background-color: #f0f4f8; border: 1px solid #ddd; border-radius: 6px; position: relative; }
     .gantt-bar { position: absolute; height: 100%; background-color: #4a90e2; border-radius: 6px; color: white; display: flex; justify-content: center; align-items: center; padding: 0 5px; font-weight: bold; }
   </style>
+=======
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom FCFS Scheduling Gantt Chart</title>
+    <link rel="stylesheet" href="FCFS style.css">
+>>>>>>> e76fadde6c5001e92f4609550af25e7c30718034:FCFS.html
 </head>
 <body>
 
@@ -191,6 +198,7 @@
   </div>
   
 
+<<<<<<< HEAD:CPU scheduling.html
 <script>
   let processCounter = 1;
 
@@ -304,5 +312,17 @@
   }
 </script>
 
+=======
+    <form id="processForm" style="display: none;">
+        <div id="processFieldsContainer"></div>
+        <button type="button" id="startButton" onclick="startScheduling()">Start Scheduling</button>
+    </form>
+
+    <div class="timeline" id="timeline"></div>
+    <div class="gantt-chart" id="ganttChart"></div>
+    <div id="resultsContainer"></div>
+
+    <script src="FCFS script.js"></script>
+>>>>>>> e76fadde6c5001e92f4609550af25e7c30718034:FCFS.html
 </body>
 </html>
