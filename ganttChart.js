@@ -5,6 +5,16 @@ let ganttChartContainer, timelineContainer;
 // Store colors by process name for consistency
 const processColors = {};
 
+// Generate a random color function
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 // Function to initialize Gantt chart elements
 function initGanttChart(ganttChartElement, timelineElement) {
     ganttChartContainer = ganttChartElement;
@@ -69,4 +79,4 @@ function createGanttChart(executionOrder) {
 }
 
 // Export functions to be used in other scripts
-export { initGanttChart, createGanttChart };
+export { initGanttChart, createGanttChart, getRandomColor };

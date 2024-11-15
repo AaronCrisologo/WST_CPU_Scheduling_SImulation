@@ -1,4 +1,4 @@
-import { initGanttChart, createGanttChart } from './ganttChart.js';
+import { initGanttChart, createGanttChart, getRandomColor } from './ganttChart.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const ganttChartElement = document.getElementById("ganttChart");
@@ -88,7 +88,6 @@ function startScheduling() {
         return;
     }
 
-    console.log("Starting Round Robin Scheduling...");
     roundRobinScheduling(timeQuantum);
 }
 
@@ -111,7 +110,6 @@ function roundRobinScheduling(timeQuantum) {
         }
     });
 
-    console.log("Initial queue:", queue);
 
     // Main loop for Round Robin scheduling
     while (completedProcesses < totalProcesses) {
@@ -119,7 +117,6 @@ function roundRobinScheduling(timeQuantum) {
             const currentIndex = queue.shift(); // Get the next process in the queue
             const currentProcess = processes[currentIndex];
 
-            console.log(`Processing ${currentProcess.name}`);
 
             // Determine the actual time the process will run this round
             const timeToRun = Math.min(currentProcess.remainingTime, timeQuantum);
@@ -157,25 +154,11 @@ function roundRobinScheduling(timeQuantum) {
         } else {
             currentTime++; // No available processes; increment current time
         }
-
-        // Log current queue status for debugging
-        console.log("Current queue:", queue);
     }
 
-    console.log("Round Robin Scheduling completed.");
     // Create Gantt chart and display results based on execution order
     createGanttChart(executionOrder);
     displayResults();
-}
-
-// Function to generate a random color
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
 }
 
 // Display results in a table
