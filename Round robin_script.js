@@ -1,3 +1,13 @@
+import { initGanttChart, createGanttChart } from './ganttChart.js';
+
+document.addEventListener("DOMContentLoaded", () => {
+    const ganttChartElement = document.getElementById("ganttChart");
+    const timelineElement = document.getElementById("timeline");
+
+    // Initialize Gantt chart elements
+    initGanttChart(ganttChartElement, timelineElement);
+});
+
 // Store user-defined processes
 let processes = [];
 
@@ -156,47 +166,6 @@ function roundRobinScheduling(timeQuantum) {
     // Create Gantt chart and display results based on execution order
     createGanttChart(executionOrder);
     displayResults();
-}
-
-// Create Gantt Chart with animation
-function createGanttChart(executionOrder) {
-    ganttChart.innerHTML = ""; // Clear previous chart
-    let totalTime = executionOrder[executionOrder.length - 1].endTime;
-
-    executionOrder.forEach((segment, index) => {
-        const processBar = document.createElement("div");
-        processBar.classList.add("process-bar");
-
-        // Set initial width to 0 and position based on start time
-        processBar.style.width = "0%";
-        processBar.style.left = `${(segment.startTime / totalTime) * 100}%`; // Position based on startTime
-        processBar.textContent = `${segment.name}`;
-        processBar.style.backgroundColor = segment.color; // Use the stored color
-
-        // Append the process bar to the Gantt chart
-        ganttChart.appendChild(processBar);
-
-        // Create timeline marker for each process segment
-        const marker = document.createElement("div");
-        marker.classList.add("timeline-marker");
-        marker.style.left = `${(segment.startTime / totalTime) * 100}%`;
-        marker.textContent = `${segment.startTime}s`;
-        timeline.appendChild(marker);
-
-        // Delay each bar's width expansion for animation effect
-        setTimeout(() => {
-            const duration = segment.endTime - segment.startTime;
-            const widthPercentage = (duration / totalTime) * 100;
-            processBar.style.width = `${widthPercentage}%`;
-        }, index * 500); // Stagger animations, adjust the timing as needed
-    });
-
-    // Add final end time marker
-    const endMarker = document.createElement("div");
-    endMarker.classList.add("timeline-marker");
-    endMarker.style.left = "100%";
-    endMarker.textContent = `${totalTime}s`;
-    timeline.appendChild(endMarker);
 }
 
 // Function to generate a random color
