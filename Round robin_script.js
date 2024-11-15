@@ -8,6 +8,7 @@ const ganttChart = document.getElementById("ganttChart");
 const timeline = document.getElementById("timeline");
 const resultsContainer = document.getElementById("resultsContainer");
 const timeQuantumInput = document.getElementById("timeQuantum"); // Input for time quantum
+const startButton = document.getElementById("startButton");
 
 // Generate input fields for each process
 function generateProcessFields() {
@@ -30,7 +31,7 @@ function generateProcessFields() {
     }
 
     processFieldsContainer.style.display = "block"; // Show process fields
-    document.getElementById("startButton").style.display = "block"; // Show start button
+    startButton.style.display = "block"; // Show start button
 }
 
 // Start scheduling with user-defined processes
@@ -54,6 +55,9 @@ function startScheduling() {
             return;
         }
 
+        // Assign a random color for each process
+        const processColor = getRandomColor();
+
         processes.push({
             name: `P${i + 1}`,
             arrivalTime: arrivalTime,
@@ -62,7 +66,8 @@ function startScheduling() {
             priority: priority, // Store priority value
             endTime: 0,
             turnaroundTime: 0,
-            waitingTime: 0
+            waitingTime: 0,
+            color: processColor // Store the color for each process
         });
     }
 
@@ -73,10 +78,10 @@ function startScheduling() {
         return;
     }
 
+    console.log("Starting Round Robin Scheduling...");
     roundRobinScheduling(timeQuantum);
 }
 
-// Round Robin Scheduling Algorithm
 // Round Robin Scheduling Algorithm
 function roundRobinScheduling(timeQuantum) {
     let currentTime = 0;
@@ -96,11 +101,15 @@ function roundRobinScheduling(timeQuantum) {
         }
     });
 
+    console.log("Initial queue:", queue);
+
     // Main loop for Round Robin scheduling
     while (completedProcesses < totalProcesses) {
         if (queue.length > 0) {
             const currentIndex = queue.shift(); // Get the next process in the queue
             const currentProcess = processes[currentIndex];
+
+            console.log(`Processing ${currentProcess.name}`);
 
             // Determine the actual time the process will run this round
             const timeToRun = Math.min(currentProcess.remainingTime, timeQuantum);
@@ -111,7 +120,8 @@ function roundRobinScheduling(timeQuantum) {
             executionOrder.push({
                 name: currentProcess.name,
                 startTime: currentTime - timeToRun,
-                endTime: currentTime
+                endTime: currentTime,
+                color: currentProcess.color // Use the process's color
             });
 
             // Check if the process has completed its execution
@@ -137,15 +147,17 @@ function roundRobinScheduling(timeQuantum) {
         } else {
             currentTime++; // No available processes; increment current time
         }
+
+        // Log current queue status for debugging
+        console.log("Current queue:", queue);
     }
 
+    console.log("Round Robin Scheduling completed.");
     // Create Gantt chart and display results based on execution order
     createGanttChart(executionOrder);
     displayResults();
 }
 
-
-// Create Gantt Chart
 // Create Gantt Chart with animation
 function createGanttChart(executionOrder) {
     ganttChart.innerHTML = ""; // Clear previous chart
@@ -159,7 +171,7 @@ function createGanttChart(executionOrder) {
         processBar.style.width = "0%";
         processBar.style.left = `${(segment.startTime / totalTime) * 100}%`; // Position based on startTime
         processBar.textContent = `${segment.name}`;
-        processBar.style.backgroundColor = getRandomColor();
+        processBar.style.backgroundColor = segment.color; // Use the stored color
 
         // Append the process bar to the Gantt chart
         ganttChart.appendChild(processBar);
@@ -187,8 +199,6 @@ function createGanttChart(executionOrder) {
     timeline.appendChild(endMarker);
 }
 
-
-
 // Function to generate a random color
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -205,16 +215,15 @@ function displayResults() {
     table.innerHTML = `
         <tr>
             <th>Process</th>
-            <th>Arrival Time (s)</th>
-            <th>Burst Time (s)</th>
+            <th>Arrival Time</th>
+            <th>Burst Time</th>
             <th>Priority</th>
-            <th>End Time (s)</th>
-            <th>Turnaround Time (s)</th>
-            <th>Waiting Time (s)</th>
+            <th>End Time</th>
+            <th>Turnaround Time</th>
+            <th>Waiting Time</th>
         </tr>
     `;
-
-    processes.forEach(process => {
+    processes.forEach((process) => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${process.name}</td>
@@ -230,3 +239,9 @@ function displayResults() {
 
     resultsContainer.appendChild(table);
 }
+
+// Event listener to generate process input fields when the user changes the number of processes
+numProcessesInput.addEventListener("input", generateProcessFields);
+
+// Event listener for the start button
+startButton.addEventListener("click", startScheduling);
