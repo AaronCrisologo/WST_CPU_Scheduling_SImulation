@@ -1,5 +1,3 @@
-// ganttChart.js
-
 let ganttChartContainer, timelineContainer;
 
 // Store colors by process name for consistency
