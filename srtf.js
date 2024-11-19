@@ -36,6 +36,8 @@ function generateProcessFields() {
             <input type="number" class="arrivalTime" min="0" value="0" required>
             <label>Burst Time (s):</label>
             <input type="number" class="burstTime" min="1" value="1" required>
+            <label>Priority:</label>
+            <input type="number" class="priority" min="1" value="1" required>
         `;
         processFieldsContainer.appendChild(processField);
     }
