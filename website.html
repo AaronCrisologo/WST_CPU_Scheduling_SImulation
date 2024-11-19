@@ -47,25 +47,33 @@
     <script type="module" id="algorithmScript" src="FCFS.js"></script>
 
     <script>
-        // Listen for changes in the dropdown menu and update the script dynamically
+        // Track the currently loaded algorithm module
+        let currentAlgorithm = null;
+
         const algorithmSelect = document.getElementById("algorithmSelect");
 
-        algorithmSelect.addEventListener("change", (event) => {
+        algorithmSelect.addEventListener("change", async (event) => {
             const selectedAlgorithm = event.target.value;
             const scriptElement = document.getElementById("algorithmScript");
 
-            // Remove the old script if it exists
+            // Call cleanup on the currently loaded algorithm (if any)
+            if (currentAlgorithm && typeof currentAlgorithm.cleanup === "function") {
+                currentAlgorithm.cleanup();
+            }
+
+            // Remove the old script
             if (scriptElement) {
                 scriptElement.remove();
             }
 
-            // Create a new script element and set its source to the selected algorithm file
+            // Dynamically import the new module
+            currentAlgorithm = await import(`./${selectedAlgorithm}`);
+
+            // Attach the new script to the DOM for debugging purposes
             const newScriptElement = document.createElement("script");
             newScriptElement.id = "algorithmScript";
             newScriptElement.type = "module";
             newScriptElement.src = selectedAlgorithm;
-
-            // Append the new script to the body
             document.body.appendChild(newScriptElement);
         });
     </script>

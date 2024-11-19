@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
     initGanttChart(ganttChartElement, timelineElement);
 });
 
+// Cleanup function to remove lingering listeners and state
+export function cleanup() {
+    document.getElementById("startButton").removeEventListener("click", startScheduling);
+    processes = [];
+}
+
 // Store user-defined processes
 let processes = [];
 
