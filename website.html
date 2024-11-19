@@ -8,11 +8,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
-    <div>
+<!-- Landing Page -->
+<div class="landing-page" id="landingPage">
+    <h1>Welcome to CPU Scheduling Simulation</h1>
+    <a href="#" class="button" onclick="showComputePage()">Compute for a Given Algorithm</a>
+    <a href="#" class="button">Compare Algorithms (Coming Soon)</a>
+</div>
+
+<!-- Compute Page -->
+<div class="compute-page" id="computePage">
+    <div class="container">
         <h1>CPU Scheduling Simulation</h1>
 
-        <!-- Dropdown for algorithm selection -->
         <label for="algorithmSelect">Select Scheduling Algorithm:</label>
         <select id="algorithmSelect">
             <option value="FCFS.js">First Come First Serve (FCFS)</option>
@@ -25,14 +32,15 @@
 
         <label for="numProcesses">Number of Processes:</label>
         <input type="number" id="numProcesses" min="1" required>
-        <button onclick="generateProcessFields()">Generate Process Fields</button>
 
-        <div id="processFieldsContainer" style="display:none;"></div>
+        <button class="button" onclick="generateProcessFields()">Generate Process Fields</button>
+
+        <div id="processFieldsContainer"></div>
 
         <label for="timeQuantum">Time Quantum (s):</label>
         <input type="number" id="timeQuantum" min="1" required>
 
-        <button id="startButton" style="display:none;" onclick="startScheduling()">Start Scheduling</button>
+        <button class="button" id="startButton" style="display:none;" onclick="startScheduling()">Start Scheduling</button>
 
         <div id="ganttChartContainer">
             <h2>Gantt Chart</h2>
@@ -42,41 +50,68 @@
 
         <div id="resultsContainer"></div>
     </div>
+</div>
 
-    <!-- Default JS file (can be replaced dynamically) -->
-    <script type="module" id="algorithmScript" src="FCFS.js"></script>
+<!-- Default JS file (can be replaced dynamically) -->
+<script type="module" id="algorithmScript" src="FCFS.js"></script>
 
-    <script>
-        // Track the currently loaded algorithm module
-        let currentAlgorithm = null;
+<script>
+    function showComputePage() {
+        document.getElementById("landingPage").style.display = "none";
+        document.getElementById("computePage").style.display = "block";
+    }
 
-        const algorithmSelect = document.getElementById("algorithmSelect");
+    // Track the currently loaded algorithm module
+    let currentAlgorithm = null;
 
-        algorithmSelect.addEventListener("change", async (event) => {
-            const selectedAlgorithm = event.target.value;
-            const scriptElement = document.getElementById("algorithmScript");
+    const algorithmSelect = document.getElementById("algorithmSelect");
 
-            // Call cleanup on the currently loaded algorithm (if any)
-            if (currentAlgorithm && typeof currentAlgorithm.cleanup === "function") {
-                currentAlgorithm.cleanup();
-            }
+    // Hide Gantt Chart container by default
+    document.querySelector('#ganttChartContainer').style.display = 'none';
+    document.querySelector('#ganttChartContainer').style.opacity = '0';
 
-            // Remove the old script
-            if (scriptElement) {
-                scriptElement.remove();
-            }
+    // Modify the start scheduling function to show and animate the Gantt Chart
+    function startScheduling() {
+        const ganttContainer = document.querySelector('#ganttChartContainer');
+        
+        // Show the container
+        ganttContainer.style.display = 'block';
+        
+        // Use setTimeout to ensure display is set before animating
+        setTimeout(() => {
+            ganttContainer.style.transition = 'opacity 0.5s ease-in';
+            ganttContainer.style.opacity = '1';
+        }, 10);
+    }
 
-            // Dynamically import the new module
-            currentAlgorithm = await import(`./${selectedAlgorithm}`);
+    // Attach the startScheduling function to the button
+    document.querySelector('button[onclick="startScheduling()"]').addEventListener('click', startScheduling);
 
-            // Attach the new script to the DOM for debugging purposes
-            const newScriptElement = document.createElement("script");
-            newScriptElement.id = "algorithmScript";
-            newScriptElement.type = "module";
-            newScriptElement.src = selectedAlgorithm;
-            document.body.appendChild(newScriptElement);
-        });
-    </script>
+    algorithmSelect.addEventListener("change", async (event) => {
+        const selectedAlgorithm = event.target.value;
+        const scriptElement = document.getElementById("algorithmScript");
+
+        // Call cleanup on the currently loaded algorithm (if any)
+        if (currentAlgorithm && typeof currentAlgorithm.cleanup === "function") {
+            currentAlgorithm.cleanup();
+        }
+
+        // Remove the old script
+        if (scriptElement) {
+            scriptElement.remove();
+        }
+
+        // Dynamically import the new module
+        currentAlgorithm = await import(`./${selectedAlgorithm}`);
+
+        // Attach the new script to the DOM for debugging purposes
+        const newScriptElement = document.createElement("script");
+        newScriptElement.id = "algorithmScript";
+        newScriptElement.type = "module";
+        newScriptElement.src = selectedAlgorithm;
+        document.body.appendChild(newScriptElement);
+    });
+</script>
 </body>
 
 </html>

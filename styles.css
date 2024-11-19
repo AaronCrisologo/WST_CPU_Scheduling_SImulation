@@ -1,17 +1,211 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+/* Updated Color Palette */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --background-color: #f7f9fc;
+    --text-color: #2c3e50;
+    --border-color: #e0e4e8;
 }
 
+/* General Styles */
+body {
+    font-family: 'Inter', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+h1, h2 {
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px 20px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Landing Page Styles */
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #f4f4f9 100%);
+}
+
+.landing-page a {
+    margin: 15px;
+    font-size: 1.2rem;
+}
+
+/* Compute Page Styles */
+.compute-page {
+    display: none;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+#processFieldsContainer {
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.process-field {
+    display: table-row;
+}
+
+.process-field:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.process-field:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.process-field > * {
+    display: table-cell;
+    padding: 10px;
+    vertical-align: middle;
+    border-bottom: 0px solid var(--border-color);
+}
+
+.process-field label {
+    white-space: nowrap;
+    width: 1%;
+    padding-right: 15px;
+    text-align: right;
+    font-weight: 500;
+    margin: 0;
+}
+
+.process-field input, 
+.process-field select {
+    width: 100%;
+    border: 0px solid var(--border-color);
+    padding: 8px;
+    margin: 0;
+    box-sizing: border-box;
+    line-height: 1.5;
+    height: 38px;
+}
+
+.process-field:last-child > * {
+    border-bottom: none;
+}
+
+.process-field > *:first-child {
+    width: 30%;
+}
+
+.process-field > *:last-child {
+    width: 70%;
+}
+
+#ganttChartContainer {
+    margin-top: 30px;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#resultsContainer {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: center;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+table tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Keeping Gantt Chart and Timeline base styles the same to prevent JS errors */
 .gantt-chart {
     position: relative;
     width: 100%;
     height: 80px;
-    /* Reduced height for a more compact view */
     border: 1px solid #000;
     margin-top: 20px;
     overflow-x: auto;
-    /* Allow horizontal scrolling if needed */
 }
 
 .process-bar {
@@ -20,10 +214,9 @@ body {
     text-align: center;
     color: white;
     line-height: 30px;
-    /* Center text vertically based on new height */
     overflow: hidden;
     transition: width 0.5s ease;
-    background-color: #4CAF50;
+    background-color: var(--primary-color);
 }
 
 .timeline {
@@ -35,7 +228,6 @@ body {
 .timeline-marker {
     position: absolute;
     top: -20px;
-    /* Adjust marker to sit above the Gantt chart */
     height: 10px;
     width: 2px;
     background-color: #000;
@@ -43,30 +235,4 @@ body {
     transform: translateX(-50%);
     font-size: 12px;
     text-align: center;
-}
-
-.process-field {
-    margin-bottom: 10px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-table,
-th,
-td {
-    border: 1px solid #ddd;
-}
-
-th,
-td {
-    padding: 8px;
-    text-align: center;
-}
-
-th {
-    background-color: #f2f2f2;
 }
