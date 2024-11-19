@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling Simulation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div>
+        <h1>CPU Scheduling Simulation</h1>
+
+        <!-- Dropdown for algorithm selection -->
+        <label for="algorithmSelect">Select Scheduling Algorithm:</label>
+        <select id="algorithmSelect">
+            <option value="FCFS.js">First Come First Serve (FCFS)</option>
+            <option value="sjf.js">Shortest Job First (SJF)</option>
+            <option value="npp.js">Non-Preemptive Priority (NPP)</option>
+            <option value="rr.js">Round Robin (RR)</option>
+            <option value="srtf.js">Shortest Remaining Job First (SRTF)</option>
+            <option value="pp.js">Preemptive Priority (PP)</option>
+        </select>
+
+        <label for="numProcesses">Number of Processes:</label>
+        <input type="number" id="numProcesses" min="1" required>
+        <button onclick="generateProcessFields()">Generate Process Fields</button>
+
+        <div id="processFieldsContainer" style="display:none;"></div>
+
+        <label for="timeQuantum">Time Quantum (s):</label>
+        <input type="number" id="timeQuantum" min="1" required>
+
+        <button id="startButton" style="display:none;" onclick="startScheduling()">Start Scheduling</button>
+
+        <div id="ganttChartContainer">
+            <h2>Gantt Chart</h2>
+            <div id="timeline" class="timeline"></div>
+            <div id="ganttChart" class="gantt-chart"></div>
+        </div>
+
+        <div id="resultsContainer"></div>
+    </div>
+
+    <!-- Default JS file (can be replaced dynamically) -->
+    <script type="module" id="algorithmScript" src="FCFS.js"></script>
+
+    <script>
+        // Listen for changes in the dropdown menu and update the script dynamically
+        const algorithmSelect = document.getElementById("algorithmSelect");
+
+        algorithmSelect.addEventListener("change", (event) => {
+            const selectedAlgorithm = event.target.value;
+            const scriptElement = document.getElementById("algorithmScript");
+
+            // Remove the old script if it exists
+            if (scriptElement) {
+                scriptElement.remove();
+            }
+
+            // Create a new script element and set its source to the selected algorithm file
+            const newScriptElement = document.createElement("script");
+            newScriptElement.id = "algorithmScript";
+            newScriptElement.type = "module";
+            newScriptElement.src = selectedAlgorithm;
+
+            // Append the new script to the body
+            document.body.appendChild(newScriptElement);
+        });
+    </script>
+</body>
+
+</html>
