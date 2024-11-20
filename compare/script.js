@@ -2,9 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const processFormContainer = document.getElementById('processFormContainer');
   const resultsContainer = document.getElementById('resultsContainer');
   const chartContainer = document.getElementById('chartContainer');
+  const algorithmSelect = document.getElementById('algorithmSelect');
+  const addAlgorithmBtn = document.getElementById('addAlgorithmBtn');
+  const algorithmList = document.getElementById('algorithmList');
+  const compareBtn = document.getElementById('compareBtn');
 
   document.getElementById('generateProcesses').addEventListener('click', generateProcessFields);
-  document.getElementById('compareBtn').addEventListener('click', compareAlgorithms);
+  addAlgorithmBtn.addEventListener('click', addAlgorithmToCompare);
+  compareBtn.addEventListener('click', compareAlgorithms);
+
+  let selectedAlgorithms = [];
 
   function generateProcessFields() {
     const numProcesses = parseInt(document.getElementById('numProcesses').value, 10);
@@ -24,7 +31,20 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>`;
       processFormContainer.innerHTML += processForm;
     }
-    document.getElementById('compareBtn').style.display = 'block';
+    compareBtn.style.display = selectedAlgorithms.length > 0 ? 'block' : 'none';
+  }
+
+  function addAlgorithmToCompare() {
+    const selectedAlgorithm = algorithmSelect.value;
+
+    if (!selectedAlgorithms.includes(selectedAlgorithm)) {
+      selectedAlgorithms.push(selectedAlgorithm);
+      const listItem = document.createElement('li');
+      listItem.textContent = selectedAlgorithm.toUpperCase();
+      algorithmList.appendChild(listItem);
+    }
+
+    compareBtn.style.display = selectedAlgorithms.length > 0 ? 'block' : 'none';
   }
 
   function compareAlgorithms() {
@@ -38,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
       processes.push({ id: index + 1, arrivalTime, burstTime, priority });
     });
 
+    // Calculate results for all algorithms
     const fcfsResults = calculateFCFS([...processes]);
     const sjfResults = calculateSJF([...processes]);
     const nppResults = calculateNPP([...processes]);
@@ -45,7 +66,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const srtfResults = calculateSRTF([...processes]);
     const ppResults = calculatePP([...processes]);
 
-    displayResults({ fcfsResults, sjfResults, nppResults, rrResults, srtfResults, ppResults });
+    // Only display results for selected algorithms
+    const results = {};
+    selectedAlgorithms.forEach((algorithm) => {
+      results[`${algorithm}Results`] = calculateAlgorithm(algorithm, [...processes], timeQuantum);
+    });
+
+    displayResults(results);
+  }
+
+  function calculateAlgorithm(algorithm, processes, timeQuantum) {
+    switch (algorithm) {
+      case 'fcfs':
+        return calculateFCFS(processes);
+      case 'sjf':
+        return calculateSJF(processes);
+      case 'npp':
+        return calculateNPP(processes);
+      case 'rr':
+        return calculateRR(processes, timeQuantum);
+      case 'srtf':
+        return calculateSRTF(processes);
+      case 'pp':
+        return calculatePP(processes);
+      default:
+        return [];
+    }
   }
 
   function calculateFCFS(processes) {
@@ -250,23 +296,53 @@ document.addEventListener('DOMContentLoaded', () => {
   }  
 
   function displayResults(results) {
+    // Find the minimum average turnaround time and waiting time across all algorithms
+    let minTurnaroundTime = Infinity;
+    let minWaitingTime = Infinity;
+    let avgTurnaroundTimes = {};
+    let avgWaitingTimes = {};
+  
+    // Calculate the average turnaround time and waiting time for each algorithm
+    Object.keys(results).forEach(algorithm => {
+      const totalTurnaroundTime = results[algorithm].reduce((sum, p) => sum + p.turnaroundTime, 0);
+      const totalWaitingTime = results[algorithm].reduce((sum, p) => sum + p.waitingTime, 0);
+      const avgTurnaround = totalTurnaroundTime / results[algorithm].length;
+      const avgWaiting = totalWaitingTime / results[algorithm].length;
+  
+      avgTurnaroundTimes[algorithm] = avgTurnaround;
+      avgWaitingTimes[algorithm] = avgWaiting;
+  
+      if (avgTurnaround < minTurnaroundTime) {
+        minTurnaroundTime = avgTurnaround;
+      }
+      if (avgWaiting < minWaitingTime) {
+        minWaitingTime = avgWaiting;
+      }
+    });
+  
+    // Generate the table
     resultsContainer.innerHTML = `
       <table>
         <thead>
           <tr>
             <th>Algorithm</th>
-            <th>Turnaround Time</th>
-            <th>Waiting Time</th>
+            <th>Average Turnaround Time</th>
+            <th>Average Waiting Time</th>
           </tr>
         </thead>
         <tbody>
           ${Object.keys(results).map(algorithm => `
             <tr>
               <td>${algorithm.replace(/Results$/, '')}</td>
-              <td>${results[algorithm].reduce((acc, p) => acc + p.turnaroundTime, 0) / results[algorithm].length}</td>
-              <td>${results[algorithm].reduce((acc, p) => acc + p.waitingTime, 0) / results[algorithm].length}</td>
+              <td ${avgTurnaroundTimes[algorithm] === minTurnaroundTime ? 'style="background-color: green;"' : ''}>
+                ${avgTurnaroundTimes[algorithm].toFixed(2)}
+              </td>
+              <td ${avgWaitingTimes[algorithm] === minWaitingTime ? 'style="background-color: green;"' : ''}>
+                ${avgWaitingTimes[algorithm].toFixed(2)}
+              </td>
             </tr>`).join('')}
         </tbody>
       </table>`;
   }
+  
 });

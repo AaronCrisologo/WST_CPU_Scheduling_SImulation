@@ -4,28 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Algorithm Comparison</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    .form-section, .results-section {
-      margin-bottom: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    table th, table td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-    }
-    .chart-container {
-      margin-top: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div>
@@ -39,6 +18,29 @@
       <br>
       <button id="generateProcesses">Generate Process Fields</button>
     </div>
+    
+    <!-- Dropdown to select algorithm and button to add it -->
+    <div class="form-section">
+      <label for="algorithmSelect">Select Algorithm:</label>
+      <select id="algorithmSelect">
+        <option value="fcfs">FCFS</option>
+        <option value="sjf">SJF</option>
+        <option value="npp">NPP</option>
+        <option value="rr">RR</option>
+        <option value="srtf">SRTF</option>
+        <option value="pp">PP</option>
+      </select>
+      <button id="addAlgorithmBtn">Add Algorithm</button>
+    </div>
+
+    <!-- List of added algorithms -->
+    <div class="algorithm-list">
+      <h3>Algorithms to Compare:</h3>
+      <ul id="algorithmList">
+        <!-- List of selected algorithms will appear here -->
+      </ul>
+    </div>
+    
     <div id="processFormContainer"></div>
     <button id="compareBtn" style="display:none;">Compare Algorithms</button>
     <div id="resultsContainer"></div>
