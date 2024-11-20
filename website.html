@@ -11,7 +11,7 @@
 <!-- Landing Page -->
 <div class="landing-page" id="landingPage">
     <h1>Welcome to CPU Scheduling Simulation</h1>
-    <a href="#" class="button" onclick="showComputePage()">Compute for a Given Algorithm</a>
+    <a href="#" class="button" onclick="showComputePage()">Simulate an Algorithm</a>
     <a href="#" class="button" onclick="navigateToComparison()">Compare Algorithms</a>
 </div>
 
@@ -19,6 +19,11 @@
 <div class="compute-page slide-Up" id="computePage">
     <div class="container">
         <h1>CPU Scheduling Simulation</h1>
+
+        <div class="section-header">
+            <h3>Simulate Algorithm</h3>
+            <p>See how the algorithm schedules the different processes and provide computations for end time, waiting time, and turnaround time.</p>
+        </div>
 
         <label for="algorithmSelect">Select Scheduling Algorithm:</label>
         <select id="algorithmSelect" onchange="toggleTimeQuantum()">

@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const addAlgorithmBtn = document.getElementById('addAlgorithmBtn');
   const algorithmList = document.getElementById('algorithmList');
   const compareBtn = document.getElementById('compareBtn');
+  const timequantumdisplay1 = document.getElementById('timeQuantum1');
+  const timequantumdisplay = document.getElementById('timeQuantum');
 
   document.getElementById('generateProcesses').addEventListener('click', generateProcessFields);
   addAlgorithmBtn.addEventListener('click', addAlgorithmToCompare);
@@ -19,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     processFormContainer.innerHTML = '';
     resultsContainer.innerHTML = '';
     chartContainer.innerHTML = '';
+
+    timequantumdisplay1.style.display = 'block'
+    timequantumdisplay.style.display = 'block'
 
     for (let i = 0; i < numProcesses; i++) {
       const processForm = `
@@ -38,16 +43,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function addAlgorithmToCompare() {
     const selectedAlgorithm = algorithmSelect.value;
-
+  
     if (!selectedAlgorithms.includes(selectedAlgorithm)) {
       selectedAlgorithms.push(selectedAlgorithm);
+  
       const listItem = document.createElement('li');
-      listItem.textContent = selectedAlgorithm.toUpperCase();
+      listItem.classList.add('algorithm-item');
+  
+      const algorithmName = document.createElement('span');
+      algorithmName.textContent = selectedAlgorithm.toUpperCase();
+      algorithmName.classList.add('algorithm-name');
+  
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = '✖';
+      removeBtn.classList.add('remove-btn');
+      removeBtn.onclick = () => {
+        selectedAlgorithms = selectedAlgorithms.filter(
+          (algorithm) => algorithm !== selectedAlgorithm
+        );
+        listItem.remove();
+        compareBtn.style.display = selectedAlgorithms.length > 1 ? 'block' : 'none';
+      };
+  
+      listItem.appendChild(algorithmName);
+      listItem.appendChild(removeBtn);
       algorithmList.appendChild(listItem);
     }
-
+  
     compareBtn.style.display = iterator > 0 && selectedAlgorithms.length > 1 ? 'block' : 'none';
   }
+  
 
   function compareAlgorithms() {
     const timeQuantum = parseInt(document.getElementById('timeQuantum').value, 10);
@@ -358,4 +383,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   
+});
+
+const goBackButton = document.getElementById("goBackButton");
+
+goBackButton.addEventListener("click", () => {
+    // Navigate back to the landing page
+    window.location.href = "../website.html";
 });

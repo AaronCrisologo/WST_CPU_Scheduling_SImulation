@@ -80,12 +80,6 @@ algorithmSelect.addEventListener("change", async (event) => {
 const goBackButton = document.getElementById("goBackButton");
 
 goBackButton.addEventListener("click", () => {
-    // Hide the Compute page
-    computePage.style.display = "none";
-
-    // Show the Landing page
-    landingPage.style.display = "block";
-
-    // Optional: Reset animations or styles if needed
-    landingPage.classList.add("fade-in");
+    // Navigate back to the landing page
+    window.location.href = "../website.html";
 });

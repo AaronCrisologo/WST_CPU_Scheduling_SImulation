@@ -44,20 +44,22 @@
     </div>
 
     <div class="form-section">
-      <label for="timeQuantum">Time Quantum (for RR):</label>
-      <input type="number" id="timeQuantum" min="1" value="2">
-    </div>
-
-    <div class="form-section">
       <button id="generateProcesses" class="btn">Generate Process Fields</button>
     </div>
 
     <div id="processFormContainer"></div>
+
+    <div class="form-section">
+      <label for="timeQuantum" id="timeQuantum1" style="display: none;">Time Quantum (for RR):</label>
+      <input type="number" min="1" value="2" id='timeQuantum'style="display: none;">
+    </div>
+    
     <button id="compareBtn" class="btn" style="display:none;">Compare Algorithms</button>
 
     <div id="resultsContainer" class="table-container"></div>
 
     <div id="chartContainer" class="chart-container"></div>
+    <button id="goBackButton" class="btn">Go Back</button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

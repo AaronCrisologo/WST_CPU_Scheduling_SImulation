@@ -27,6 +27,18 @@ h1, h2 {
     letter-spacing: -0.5px;
 }
 
+.section-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+  }
+  
+  .section-header p {
+    margin: 5px 0 15px;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
 .container {
     max-width: 900px;
     margin: auto;
@@ -300,19 +312,21 @@ table tr:nth-child(even) {
 }
 
 #goBackButton {
+    margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
-    margin-top: 20px;
-    cursor: pointer;
-    background-color: #c40000;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
-}
-
-#goBackButton:hover {
-    background-color: #830000;
-}
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    max-width: 110px;
+  }
+  
+  #goBackButton:hover {
+    background-color: #0056b3;
+  }
 
 /* Animation for fading in */
 @keyframes fadeIn {
