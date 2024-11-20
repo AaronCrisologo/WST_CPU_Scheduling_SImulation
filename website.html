@@ -50,12 +50,28 @@
             <div id="ganttChart" class="gantt-chart"></div>
         </div>
 
+        <!-- Results Container -->
         <div id="resultsContainer"></div>
+
+        <!-- Averages Section -->
+        <div id="averagesContainer" class="averages-container">
+            <h3 class="averages-title">Average Metrics</h3>
+            <div class="averages-metric">
+                <span class="metric-label">Average Waiting Time (AWT):</span>
+                <span id="averageWaitingTime" class="metric-value">0.00</span>
+            </div>
+            <div class="averages-metric">
+                <span class="metric-label">Average Turnaround Time (ATAT):</span>
+                <span id="averageTurnaroundTime" class="metric-value">0.00</span>
+            </div>
+        </div>
+
     </div>
 </div>
 
 <!-- Default JS file (can be replaced dynamically) -->
 <script type="module" id="algorithmScript" src="FCFS.js"></script>
+<script type="module" src="averageTimes.js"></script>
 
 <script>
     function showComputePage() {

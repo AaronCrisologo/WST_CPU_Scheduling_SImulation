@@ -112,6 +112,58 @@ input:focus, select:focus {
     width: 65em !important;
     box-sizing: border-box;
     align-items: center;
+    max-width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Averages Container */
+.averages-container {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #ffffff, #f1f1f1);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), -3px -3px 10px rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Title */
+.averages-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Metric Wrapper */
+.averages-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(145deg, #e3e3e3, #ffffff);
+    border-radius: 8px;
+    margin: 10px 0;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1), -2px -2px 6px rgba(255, 255, 255, 0.7);
+}
+
+/* Metric Label */
+.metric-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Metric Value */
+.metric-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff; /* Modern blue accent */
 }
 
 .process-field {

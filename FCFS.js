@@ -1,4 +1,5 @@
 import { initGanttChart, createGanttChart, getRandomColor } from './ganttChart.js';
+import { calculateAndDisplayAverages } from './averageTimes.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const ganttChartElement = document.getElementById("ganttChart");
@@ -119,6 +120,7 @@ function fcfsScheduling() {
     // Create Gantt chart and display results based on execution order
     createGanttChart(executionOrder);
     displayResults();
+    calculateAndDisplayAverages(processes);
 }
 
 // Display results in a table
