@@ -108,6 +108,12 @@ input:focus, select:focus {
     margin-top: 20px;
 }
 
+#algorithmSelect, #numProcesses {
+    width: 65em !important;
+    box-sizing: border-box;
+    align-items: center;
+}
+
 .process-field {
     display: table-row;
 }

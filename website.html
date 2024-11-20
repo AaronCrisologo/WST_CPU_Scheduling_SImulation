@@ -21,7 +21,7 @@
         <h1>CPU Scheduling Simulation</h1>
 
         <label for="algorithmSelect">Select Scheduling Algorithm:</label>
-        <select id="algorithmSelect">
+        <select id="algorithmSelect" onchange="toggleTimeQuantum()">
             <option value="FCFS.js">First Come First Serve (FCFS)</option>
             <option value="sjf.js">Shortest Job First (SJF)</option>
             <option value="npp.js">Non-Preemptive Priority (NPP)</option>
@@ -37,8 +37,10 @@
 
         <div id="processFieldsContainer"></div>
 
-        <label for="timeQuantum">Time Quantum (s):</label>
-        <input type="number" id="timeQuantum" min="1" required>
+        <div id="timeQuantumContainer" style="display: none;">
+            <label for="timeQuantum">Time Quantum (s):</label>
+            <input type="number" id="timeQuantum" min="1" required>
+        </div>
 
         <button class="button" id="startButton" style="display:none;" onclick="startScheduling()">Start Scheduling</button>
 
@@ -60,11 +62,24 @@
         document.getElementById("landingPage").style.display = "none";
         document.getElementById("computePage").style.display = "block";
     }
+    
 
     // Track the currently loaded algorithm module
     let currentAlgorithm = null;
 
     const algorithmSelect = document.getElementById("algorithmSelect");
+
+    function toggleTimeQuantum() {
+        const selectedAlgorithm = document.getElementById("algorithmSelect").value;
+        const timeQuantumContainer = document.getElementById("timeQuantumContainer");
+
+        // Show the Time Quantum input only if "rr.js" is selected
+        if (selectedAlgorithm === "rr.js") {
+            timeQuantumContainer.style.display = "block";
+        } else {
+            timeQuantumContainer.style.display = "none";
+        }
+    }
 
     // Hide Gantt Chart container by default
     document.querySelector('#ganttChartContainer').style.display = 'none';
