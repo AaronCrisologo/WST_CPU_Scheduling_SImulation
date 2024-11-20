@@ -12,7 +12,7 @@
 <div class="landing-page" id="landingPage">
     <h1>Welcome to CPU Scheduling Simulation</h1>
     <a href="#" class="button" onclick="showComputePage()">Compute for a Given Algorithm</a>
-    <a href="#" class="button">Compare Algorithms (Coming Soon)</a>
+    <a href="#" class="button" onclick="navigateToComparison()">Compare Algorithms</a>
 </div>
 
 <!-- Compute Page -->
@@ -78,6 +78,9 @@
         document.getElementById("landingPage").style.display = "none";
         document.getElementById("computePage").style.display = "block";
     }
+
+    function navigateToComparison() { 
+        window.location.href = 'compare/comparison.html'; }
     
 
     // Track the currently loaded algorithm module
