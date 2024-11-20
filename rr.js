@@ -26,6 +26,7 @@ const timeline = document.getElementById("timeline");
 const resultsContainer = document.getElementById("resultsContainer");
 const timeQuantumInput = document.getElementById("timeQuantum"); // Input for time quantum
 const startButton = document.getElementById("startButton");
+const genprocfields = document.getElementById("genprocfields")
 
 // Generate input fields for each process
 function generateProcessFields() {
@@ -201,7 +202,7 @@ function displayResults() {
 }
 
 // Event listener to generate process input fields when the user changes the number of processes
-numProcessesInput.addEventListener("input", generateProcessFields);
+genprocfields.addEventListener("click", generateProcessFields);
 
 // Event listener for the start button
 startButton.addEventListener("click", startScheduling);
