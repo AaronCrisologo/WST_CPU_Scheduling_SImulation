@@ -44,9 +44,14 @@ function generateProcessFields() {
         processFieldsContainer.appendChild(processField);
     }
 
-    processFieldsContainer.style.display = "block"; // Show process fields
-    startButton.style.display = "block"; // Show start button
+    // Ensure container is visible and trigger fade-in
+    processFieldsContainer.style.display = "block";
+    processFieldsContainer.classList.add("fade-in");
+
+    // Show start button
+    startButton.style.display = numProcesses > 0 ? 'block' : 'none';
 }
+
 
 // Start scheduling with user-defined processes
 function startScheduling() {

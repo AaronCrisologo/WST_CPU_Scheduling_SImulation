@@ -107,7 +107,9 @@ input:focus, select:focus {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin-top: 20px;
+    margin-bottom: 10px;
+    display: none;
+    opacity: 0;
 }
 
 #algorithmSelect, #numProcesses {
@@ -295,4 +297,73 @@ table tr:nth-child(even) {
     transform: translateX(-50%);
     font-size: 12px;
     text-align: center;
+}
+
+#goBackButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: #c40000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#goBackButton:hover {
+    background-color: #830000;
+}
+
+/* Animation for fading in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Animation for fading out */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Fade-in class */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+    animation-fill-mode: forwards; /* Retain the final state (opacity: 1) */
+}
+
+/* Fade-out class */
+.fade-out {
+    animation: fadeOut 0.5s ease-in-out;
+    animation-fill-mode: forwards; /* Retain the final state (opacity: 0) */
+}
+
+/* Compute page default state */
+.compute-page {
+    opacity: 0;
+    display: none;
+}
+
+@keyframes slideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+
+.slide-Up {
+    animation: slideUp 0.5s ease-in-out;
+    animation-fill-mode: forwards;
 }

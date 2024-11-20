@@ -16,7 +16,7 @@
 </div>
 
 <!-- Compute Page -->
-<div class="compute-page" id="computePage">
+<div class="compute-page slide-Up" id="computePage">
     <div class="container">
         <h1>CPU Scheduling Simulation</h1>
 
@@ -35,7 +35,7 @@
 
         <button class="button" id="genprocfields" onclick="generateProcessFields()">Generate Process Fields</button>
 
-        <div id="processFieldsContainer" style="display: none;"></div>
+        <div id="processFieldsContainer"></div>
 
         <div id="timeQuantumContainer" style="display: none;">
             <label for="timeQuantum">Time Quantum (s):</label>
@@ -65,6 +65,7 @@
                 <span id="averageTurnaroundTime" class="metric-value">0.00</span>
             </div>
         </div>
+        <button id="goBackButton">Go Back</button>
 
     </div>
 </div>

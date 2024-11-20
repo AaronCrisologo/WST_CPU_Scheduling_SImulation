@@ -1,6 +1,13 @@
 function showComputePage() {
-    document.getElementById("landingPage").style.display = "none";
-    document.getElementById("computePage").style.display = "block";
+    const landingPage = document.getElementById("landingPage");
+    const computePage = document.getElementById("computePage");
+
+    // Wait for the fade-out animation to complete
+    setTimeout(() => {
+        landingPage.style.display = "none"; // Hide the landing page
+        computePage.style.display = "block"; // Show the compute page
+        computePage.classList.add("fade-in"); // Add the fade-in class
+    }, 0); // Match this duration with the CSS fade-out duration
 }
 
 function navigateToComparison() { 
@@ -68,4 +75,17 @@ algorithmSelect.addEventListener("change", async (event) => {
     newScriptElement.type = "module";
     newScriptElement.src = selectedAlgorithm;
     document.body.appendChild(newScriptElement);
+});
+
+const goBackButton = document.getElementById("goBackButton");
+
+goBackButton.addEventListener("click", () => {
+    // Hide the Compute page
+    computePage.style.display = "none";
+
+    // Show the Landing page
+    landingPage.style.display = "block";
+
+    // Optional: Reset animations or styles if needed
+    landingPage.classList.add("fade-in");
 });
