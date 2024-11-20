@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorithm Comparison</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .form-section, .results-section {
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    .chart-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Algorithm Comparison</h1>
+    <div class="form-section">
+      <label for="numProcesses">Number of Processes:</label>
+      <input type="number" id="numProcesses" min="1" value="3">
+      <br>
+      <label for="timeQuantum">Time Quantum (for RR):</label>
+      <input type="number" id="timeQuantum" min="1" value="2">
+      <br>
+      <button id="generateProcesses">Generate Process Fields</button>
+    </div>
+    <div id="processFormContainer"></div>
+    <button id="compareBtn" style="display:none;">Compare Algorithms</button>
+    <div id="resultsContainer"></div>
+    <div id="chartContainer" class="chart-container"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
