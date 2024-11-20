@@ -296,6 +296,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }  
 
   function displayResults(results) {
+    // Define a mapping for shorthand acronyms to full names
+    const algorithmFullNames = {
+      fcfs: 'First-Come, First-Served (FCFS)',
+      sjf: 'Shortest Job First (SJF)',
+      npp: 'Non-Preemptive Priority (NPP)',
+      rr: 'Round Robin (RR)',
+      srtf: 'Shortest Remaining Time First (SRTF)',
+      pp: 'Preemptive Priority (PP)'
+    };
+  
     // Find the minimum average turnaround time and waiting time across all algorithms
     let minTurnaroundTime = Infinity;
     let minWaitingTime = Infinity;
@@ -333,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <tbody>
           ${Object.keys(results).map(algorithm => `
             <tr>
-              <td>${algorithm.replace(/Results$/, '')}</td>
+              <td>${algorithmFullNames[algorithm.replace(/Results$/, '')]}</td>
               <td ${avgTurnaroundTimes[algorithm] === minTurnaroundTime ? 'style="background-color: green;"' : ''}>
                 ${avgTurnaroundTimes[algorithm].toFixed(2)}
               </td>
@@ -344,5 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </tbody>
       </table>`;
   }
+  
   
 });

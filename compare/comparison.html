@@ -7,19 +7,9 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div>
+  <div class="container">
     <h1>Algorithm Comparison</h1>
-    <div class="form-section">
-      <label for="numProcesses">Number of Processes:</label>
-      <input type="number" id="numProcesses" min="1" value="3">
-      <br>
-      <label for="timeQuantum">Time Quantum (for RR):</label>
-      <input type="number" id="timeQuantum" min="1" value="2">
-      <br>
-      <button id="generateProcesses">Generate Process Fields</button>
-    </div>
-    
-    <!-- Dropdown to select algorithm and button to add it -->
+
     <div class="form-section">
       <label for="algorithmSelect">Select Algorithm:</label>
       <select id="algorithmSelect">
@@ -30,20 +20,34 @@
         <option value="srtf">SRTF</option>
         <option value="pp">PP</option>
       </select>
-      <button id="addAlgorithmBtn">Add Algorithm</button>
+      <div class="algorithm-list">
+        <div class="udec">Algorithms to Compare:</div>
+        <ul id="algorithmList">
+          <!-- List of selected algorithms will appear here -->
+        </ul>
+      </div>
+      <button id="addAlgorithmBtn" class="btn">Add Algorithm</button>
     </div>
 
-    <!-- List of added algorithms -->
-    <div class="algorithm-list">
-      <h3>Algorithms to Compare:</h3>
-      <ul id="algorithmList">
-        <!-- List of selected algorithms will appear here -->
-      </ul>
+    <div class="form-section">
+      <label for="numProcesses">Number of Processes:</label>
+      <input type="number" id="numProcesses" min="1" value="3">
     </div>
-    
+
+    <div class="form-section">
+      <label for="timeQuantum">Time Quantum (for RR):</label>
+      <input type="number" id="timeQuantum" min="1" value="2">
+    </div>
+
+    <div class="form-section">
+      <button id="generateProcesses" class="btn">Generate Process Fields</button>
+    </div>
+
     <div id="processFormContainer"></div>
-    <button id="compareBtn" style="display:none;">Compare Algorithms</button>
-    <div id="resultsContainer"></div>
+    <button id="compareBtn" class="btn" style="display:none;">Compare Algorithms</button>
+
+    <div id="resultsContainer" class="table-container"></div>
+
     <div id="chartContainer" class="chart-container"></div>
   </div>
 
