@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   compareBtn.addEventListener('click', compareAlgorithms);
 
   let selectedAlgorithms = [];
+  var iterator = 0;
 
   function generateProcessFields() {
     const numProcesses = parseInt(document.getElementById('numProcesses').value, 10);
@@ -30,8 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <input type="number" class="priority" data-id="${i}" value="1" min="1">
         </div>`;
       processFormContainer.innerHTML += processForm;
+      iterator += 1;
     }
-    compareBtn.style.display = selectedAlgorithms.length > 0 ? 'block' : 'none';
+    compareBtn.style.display = selectedAlgorithms.length > 1 ? 'block' : 'none';
   }
 
   function addAlgorithmToCompare() {
@@ -44,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       algorithmList.appendChild(listItem);
     }
 
-    compareBtn.style.display = selectedAlgorithms.length > 0 ? 'block' : 'none';
+    compareBtn.style.display = iterator > 0 && selectedAlgorithms.length > 1 ? 'block' : 'none';
   }
 
   function compareAlgorithms() {

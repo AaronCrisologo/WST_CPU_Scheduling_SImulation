@@ -11,23 +11,32 @@
     <h1>Algorithm Comparison</h1>
 
     <div class="form-section">
-      <label for="algorithmSelect">Select Algorithm:</label>
-      <select id="algorithmSelect">
-        <option value="fcfs">FCFS</option>
-        <option value="sjf">SJF</option>
-        <option value="npp">NPP</option>
-        <option value="rr">RR</option>
-        <option value="srtf">SRTF</option>
-        <option value="pp">PP</option>
-      </select>
+      <div class="section-header">
+        <h3>Select and Compare Algorithms</h3>
+        <p>Choose algorithms from the dropdown below to compare their performance.</p>
+      </div>
+    
+      <div class="dropdown-container">
+        <label for="algorithmSelect" class="dropdown-label">Select Algorithm:</label>
+        <select id="algorithmSelect" class="dropdown">
+          <option value="fcfs">FCFS</option>
+          <option value="sjf">SJF</option>
+          <option value="npp">NPP</option>
+          <option value="rr">RR</option>
+          <option value="srtf">SRTF</option>
+          <option value="pp">PP</option>
+        </select>
+        <button id="addAlgorithmBtn" class="btn">Add Algorithm</button>
+      </div>
+    
       <div class="algorithm-list">
-        <div class="udec">Algorithms to Compare:</div>
-        <ul id="algorithmList">
+        <h4>Algorithms to Compare:</h4>
+        <ul id="algorithmList" class="selected-algorithms">
           <!-- List of selected algorithms will appear here -->
         </ul>
       </div>
-      <button id="addAlgorithmBtn" class="btn">Add Algorithm</button>
     </div>
+    
 
     <div class="form-section">
       <label for="numProcesses">Number of Processes:</label>

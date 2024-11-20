@@ -28,6 +28,47 @@ h1 {
   animation: slideUp 0.5s ease-out forwards;
 }
 
+#algorithmList {
+  font-style: italic;
+}
+
+.priority{
+  width: 110px;
+}
+
+.section-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.section-header p {
+  margin: 5px 0 15px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.dropdown-label {
+  font-size: 1rem;
+  color: #444;
+}
+
+.dropdown {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+}
+
 /* Form Section */
 .form-section {
   margin-bottom: 20px;
@@ -93,6 +134,11 @@ input:focus, select:focus {
   margin-top: 20px;
 }
 
+.algorithm-list h4 {
+  margin: 0 0 10px;
+  color: #444;
+}
+
 .algorithm-list ul {
   list-style-type: none;
   padding-left: 0;
@@ -104,6 +150,25 @@ input:focus, select:focus {
   color: #333;
   opacity: 0;
   animation: fadeIn 1s ease-out forwards;
+}
+
+.selected-algorithms {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selected-algorithms li {
+  background: #eef;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0;
+  color: #333;
+}
+
+.selected-algorithms li:nth-child(odd) {
+  background: #f7f7ff;
 }
 
 .udec {
