@@ -8,120 +8,103 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<!-- Landing Page -->
-<div class="landing-page" id="landingPage">
-    <h1>Welcome to CPU Scheduling Simulation</h1>
-    <a href="#" class="button" onclick="showComputePage()">Simulate an Algorithm</a>
-    <a href="#" class="button" onclick="navigateToComparison()">Compare Algorithms</a>
-    <button class="button learn-button" onclick="startTutorial()">Learn CPU Scheduling</button>
-</div>
+<body>
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+    
+    <div class="landing-page" id="landingPage">
+      <h1>Welcome to CPU Scheduling Simulation</h1>
+      <div class="buttons-container">
+        <a href="#" onclick="showComputePage()" class="button simulate-btn">Simulate an Algorithm</a>
+        <a href="#" onclick="navigateToComparison()" class="button compare-btn">Compare Algorithms</a>
+        <a href="#" onclick="startTutorial()" class="button learn-btn">Learn CPU Scheduling</a>
+      </div>
+    </div>
 
-<!-- Tutorial Modal -->
-<div id="tutorialModal" class="tutorial-modal">
-    <div class="tutorial-content">
-        <div class="tutorial-header">
-            <h2 id="tutorialTitle">CPU Scheduling Basics</h2>
-            <span class="close-tutorial">&times;</span>
-        </div>
-        <div class="tutorial-body">
-            <div id="tutorialText"></div>
-            <div id="tutorialVisual" class="tutorial-visual"></div>
-            <div class="tutorial-nav">
-                <button id="prevBtn" onclick="previousStep()">Previous</button>
-                <div id="tutorialProgress"></div>
-                <button id="nextBtn" onclick="nextStep()">Next</button>
+    <!-- Tutorial Modal -->
+    <div id="tutorialModal" class="tutorial-modal">
+        <div class="tutorial-content">
+            <div class="tutorial-header">
+                <h2 id="tutorialTitle">CPU Scheduling Basics</h2>
+                <span class="close-tutorial">&times;</span>
+            </div>
+            <div class="tutorial-body">
+                <div id="tutorialText"></div>
+                <div id="tutorialVisual" class="tutorial-visual"></div>
+                <div class="tutorial-nav">
+                    <button id="prevBtn" onclick="previousStep()">Previous</button>
+                    <div id="tutorialProgress"></div>
+                    <button id="nextBtn" onclick="nextStep()">Next</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Compute Page -->
-<div class="compute-page slide-Up" id="computePage">
-    <div class="container">
-        <h1>CPU Scheduling Simulation</h1>
+    <!-- Compute Page -->
+    <div class="compute-page slide-Up" id="computePage">
+        <div class="container">
+            <h1>CPU Scheduling Simulation</h1>
 
-        <div class="section-header">
-            <h3>Simulate Algorithm</h3>
-            <p>See how the algorithm schedules the different processes and provide computations for end time, waiting time, and turnaround time.</p>
-        </div>
-
-        <label for="algorithmSelect">Select Scheduling Algorithm:</label>
-        <select id="algorithmSelect" onchange="toggleTimeQuantum()">
-            <option value="FCFS.js">First Come First Serve (FCFS)</option>
-            <option value="sjf.js">Shortest Job First (SJF)</option>
-            <option value="npp.js">Non-Preemptive Priority (NPP)</option>
-            <option value="rr.js">Round Robin (RR)</option>
-            <option value="srtf.js">Shortest Remaining Job First (SRTF)</option>
-            <option value="pp.js">Preemptive Priority (PP)</option>
-        </select>
-
-        <label for="numProcesses">Number of Processes:</label>
-        <input type="number" id="numProcesses" min="1" required>
-
-        <button class="button" id="genprocfields" onclick="generateProcessFields()">Generate Process Fields</button>
-
-        <div id="processFieldsContainer"></div>
-
-        <div id="timeQuantumContainer" style="display: none;">
-            <label for="timeQuantum">Time Quantum (s):</label>
-            <input type="number" id="timeQuantum" min="1" required>
-        </div>
-
-        <button class="button" id="startButton" style="display:none;" onclick="startScheduling()">Start Scheduling</button>
-
-        <div id="ganttChartContainer">
-            <h2>Gantt Chart</h2>
-            <div id="timeline" class="timeline"></div>
-            <div id="ganttChart" class="gantt-chart"></div>
-        </div>
-
-        <!-- Results Container -->
-        <div id="resultsContainer"></div>
-
-        <!-- Averages Section -->
-        <div id="averagesContainer" class="averages-container">
-            <h3 class="averages-title">Average Metrics</h3>
-            <div class="averages-metric">
-                <span class="metric-label">Average Waiting Time (AWT):</span>
-                <span id="averageWaitingTime" class="metric-value">0.00</span>
+            <div class="section-header">
+                <h3>Simulate Algorithm</h3>
+                <p>See how the algorithm schedules the different processes and provide computations for end time, waiting time, and turnaround time.</p>
             </div>
-            <div class="averages-metric">
-                <span class="metric-label">Average Turnaround Time (ATAT):</span>
-                <span id="averageTurnaroundTime" class="metric-value">0.00</span>
-            </div>
-        </div>
-        <button id="goBackButton">Go Back</button>
 
+            <label for="algorithmSelect">Select Scheduling Algorithm:</label>
+            <select id="algorithmSelect" onchange="toggleTimeQuantum()">
+                <option value="FCFS.js">First Come First Serve (FCFS)</option>
+                <option value="sjf.js">Shortest Job First (SJF)</option>
+                <option value="npp.js">Non-Preemptive Priority (NPP)</option>
+                <option value="rr.js">Round Robin (RR)</option>
+                <option value="srtf.js">Shortest Remaining Job First (SRTF)</option>
+                <option value="pp.js">Preemptive Priority (PP)</option>
+            </select>
+
+            <label for="numProcesses">Number of Processes:</label>
+            <input type="number" id="numProcesses" min="1" required>
+
+            <button class="button2" id="genprocfields" onclick="generateProcessFields()">Generate Process Fields</button>
+
+            <div id="processFieldsContainer"></div>
+
+            <div id="timeQuantumContainer" style="display: none;">
+                <label for="timeQuantum">Time Quantum (s):</label>
+                <input type="number" id="timeQuantum" min="1" required>
+            </div>
+
+            <button class="button2" id="startButton" style="display:none;" onclick="startScheduling()">Start Scheduling</button>
+
+            <div id="ganttChartContainer">
+                <h2>Gantt Chart</h2>
+                <div id="timeline" class="timeline"></div>
+                <div id="ganttChart" class="gantt-chart"></div>
+            </div>
+
+            <!-- Results Container -->
+            <div id="resultsContainer"></div>
+
+            <!-- Averages Section -->
+            <div id="averagesContainer" class="averages-container">
+                <h3 class="averages-title">Average Metrics</h3>
+                <div class="averages-metric">
+                    <span class="metric-label">Average Waiting Time (AWT):</span>
+                    <span id="averageWaitingTime" class="metric-value">0.00</span>
+                </div>
+                <div class="averages-metric">
+                    <span class="metric-label">Average Turnaround Time (ATAT):</span>
+                    <span id="averageTurnaroundTime" class="metric-value">0.00</span>
+                </div>
+            </div>
+            <button id="goBackButton">Go Back</button>
+
+        </div>
     </div>
-</div>
 
-<!-- Default JS file (can be replaced dynamically) -->
-<script type="module" id="algorithmScript" src="FCFS.js"></script>
-<script type="module" src="averageTimes.js"></script>
-<script src="main.js"></script>
+    <!-- Default JS file (can be replaced dynamically) -->
+    <script type="module" id="algorithmScript" src="FCFS.js"></script>
+    <script type="module" src="averageTimes.js"></script>
+    <script src="main.js"></script>
 
 </body>
 
 </html>
-
-//styles.css
-.learn-button {
-    background-color: #4CAF50;
-}
-
-.button {
-    display: inline-block;
-    padding: 12px 24px;
-    font-size: 1rem;
-    border: none;
-    background-color: var(--primary-color);
-    color: white;
-    cursor: pointer;
-    border-radius: 8px;
-    text-align: center;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
