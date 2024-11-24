@@ -13,6 +13,26 @@
     <h1>Welcome to CPU Scheduling Simulation</h1>
     <a href="#" class="button" onclick="showComputePage()">Simulate an Algorithm</a>
     <a href="#" class="button" onclick="navigateToComparison()">Compare Algorithms</a>
+    <button class="button learn-button" onclick="startTutorial()">Learn CPU Scheduling</button>
+</div>
+
+<!-- Tutorial Modal -->
+<div id="tutorialModal" class="tutorial-modal">
+    <div class="tutorial-content">
+        <div class="tutorial-header">
+            <h2 id="tutorialTitle">CPU Scheduling Basics</h2>
+            <span class="close-tutorial">&times;</span>
+        </div>
+        <div class="tutorial-body">
+            <div id="tutorialText"></div>
+            <div id="tutorialVisual" class="tutorial-visual"></div>
+            <div class="tutorial-nav">
+                <button id="prevBtn" onclick="previousStep()">Previous</button>
+                <div id="tutorialProgress"></div>
+                <button id="nextBtn" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Compute Page -->
@@ -83,3 +103,25 @@
 </body>
 
 </html>
+
+//styles.css
+.learn-button {
+    background-color: #4CAF50;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
