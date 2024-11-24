@@ -410,6 +410,17 @@ const tutorialSteps = [
                 </div>
             `;
         }
+    },
+    {
+        title: "Demonstration of CPU scheduling",
+        text: `All things you need to know on starting your journey in learning CPU scheduling`,
+        visual: () => {
+            return `
+                <div class="video-container"> 
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Jkmy2YLUbUY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
+                </div>
+            `;
+        }
     }
 ];
 

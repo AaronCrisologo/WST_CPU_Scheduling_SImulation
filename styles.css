@@ -714,3 +714,9 @@ table tr:nth-child(even) {
     font-size: 13px;
     margin-top: 5px;
 }
+
+.video-container { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
