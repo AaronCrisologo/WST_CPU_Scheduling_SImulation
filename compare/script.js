@@ -16,6 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedAlgorithms = [];
   var iterator = 0;
 
+    // Function to toggle time quantum visibility
+    function toggleTimeQuantumVisibility() {
+      const isRRSelected = selectedAlgorithms.includes('rr');
+      timequantumdisplay1.style.display = isRRSelected ? 'block' : 'none';
+      timequantumdisplay.style.display = isRRSelected ? 'block' : 'none';
+    }
+
   function generateProcessFields() {
     const numProcesses = parseInt(document.getElementById('numProcesses').value, 10);
     processFormContainer.innerHTML = '';
@@ -24,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     timequantumdisplay1.style.display = 'block'
     timequantumdisplay.style.display = 'block'
+    toggleTimeQuantumVisibility();
 
     for (let i = 0; i < numProcesses; i++) {
       const processForm = `
@@ -63,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
         listItem.remove();
         compareBtn.style.display = selectedAlgorithms.length > 1 ? 'block' : 'none';
+        toggleTimeQuantumVisibility();
       };
   
       listItem.appendChild(algorithmName);
@@ -71,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     compareBtn.style.display = iterator > 0 && selectedAlgorithms.length > 1 ? 'block' : 'none';
+    toggleTimeQuantumVisibility();
   }
   
 
