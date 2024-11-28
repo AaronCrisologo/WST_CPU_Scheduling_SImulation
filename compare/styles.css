@@ -1,10 +1,64 @@
 /* General Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --background-color: #f4f4f9;
+  --text-color: #2c3e50;
+  --border-color: #e0e4e8;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f9;
+  background: linear-gradient(135deg, #ff8282 0%, #7aadff 100%);
   margin: 0;
   padding: 20px;
   transition: background-color 0.3s ease-in-out;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.decorative-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.circle-1 {
+  width: 200px;
+  height: 200px;
+  background: #4776E6;
+  top: 10%;
+  left: 10%;
+}
+
+.circle-2 {
+  width: 300px;
+  height: 300px;
+  background: #8E54E9;
+  bottom: 10%;
+  right: 10%;
+}
+
+@media (max-width: 768px) {
+  .button {
+    width: 100%;
+    min-width: unset;
+  }
 }
 
 h1 {
@@ -19,11 +73,11 @@ h1 {
 /* Container */
 .container {
   max-width: 900px;
-  margin: 0 auto;
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  background-color: white;
+  padding: 30px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   opacity: 0;
   animation: slideUp 0.5s ease-out forwards;
 }
