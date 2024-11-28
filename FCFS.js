@@ -24,7 +24,7 @@ const resultsContainer = document.getElementById("resultsContainer");
 const startButton = document.getElementById("startButton");
 const genprocfields = document.getElementById("genprocfields")
 
-// Generate input fields for each process
+// Generate input fields for each process and dito magliligay ng values to be computed
 function generateProcessFields() {
     const numProcesses = parseInt(numProcessesInput.value);
     processFieldsContainer.innerHTML = ""; // Clear previous fields
@@ -53,7 +53,7 @@ function generateProcessFields() {
 }
 
 
-// Start scheduling with user-defined processes
+// input the values into an array and assign a color to each
 function startScheduling() {
     processes = [];
     ganttChart.innerHTML = ""; // Clear previous Gantt chart
@@ -90,7 +90,7 @@ function startScheduling() {
     fcfsScheduling();
 }
 
-// First Come, First Serve Scheduling Algorithm
+// First Come, First Serve Scheduling Algorithm so that the values and the order of the process in the gant chart are correct
 function fcfsScheduling() {
     let currentTime = 0;
     const executionOrder = []; // Array to keep track of execution order
