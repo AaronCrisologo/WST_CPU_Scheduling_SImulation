@@ -148,6 +148,46 @@ const tutorialSteps = [
         }
     },
     {
+        title: "Important Terms",
+        text: `Common terms you'll encounter in CPU scheduling:`,
+        visual: () => {
+            return `
+                <div class="terms-grid">
+                    <div class="term-card">
+                        <div class="term-title">Arrival Time</div>
+                        <div>When a process enters the ready queue</div>
+                        <div class="term-example">Example: Process P1 arrives at time 0</div>
+                    </div>
+                    <div class="term-card">
+                        <div class="term-title">Burst Time</div>
+                        <div>Time needed for process execution</div>
+                        <div class="term-example">Example: P1 needs 5ms to complete</div>
+                    </div>
+                    <div class="term-card">
+                        <div class="term-title">Waiting Time</div>
+                        <div>Time spent waiting for CPU</div>
+                        <div class="term-example">Example: P2 waits 5ms while P1 runs</div>
+                    </div>
+                    <div class="term-card">
+                        <div class="term-title">Turnaround Time</div>
+                        <div>Total time from arrival to completion</div>
+                        <div class="term-example">Example: Arrival (0) to Completion (7) = 7ms</div>
+                    </div>
+                    <div class="term-card">
+                        <div class="term-title">Response Time</div>
+                        <div>Time until first CPU response</div>
+                        <div class="term-example">Example: Time until process first starts running</div>
+                    </div>
+                    <div class="term-card">
+                        <div class="term-title">Time Quantum</div>
+                        <div>Maximum time slice for Round Robin</div>
+                        <div class="term-example">Example: Each process gets max 4ms</div>
+                    </div>
+                </div>
+            `;
+        }
+    },
+    {
         title: "First Come First Serve (FCFS)",
         text: `FCFS is the simplest scheduling algorithm where processes are executed in the order they arrive:
         <ul class="bullet-list">
@@ -274,46 +314,6 @@ const tutorialSteps = [
         text: "Some processes are more important than others! Priority scheduling lets important processes run first, like how emergency vehicles get priority on the road.",
         visual: () => {
             return createPriorityAnimation();
-        }
-    },
-    {
-        title: "Important Terms",
-        text: `Common terms you'll encounter in CPU scheduling:`,
-        visual: () => {
-            return `
-                <div class="terms-grid">
-                    <div class="term-card">
-                        <div class="term-title">Arrival Time</div>
-                        <div>When a process enters the ready queue</div>
-                        <div class="term-example">Example: Process P1 arrives at time 0</div>
-                    </div>
-                    <div class="term-card">
-                        <div class="term-title">Burst Time</div>
-                        <div>Time needed for process execution</div>
-                        <div class="term-example">Example: P1 needs 5ms to complete</div>
-                    </div>
-                    <div class="term-card">
-                        <div class="term-title">Waiting Time</div>
-                        <div>Time spent waiting for CPU</div>
-                        <div class="term-example">Example: P2 waits 5ms while P1 runs</div>
-                    </div>
-                    <div class="term-card">
-                        <div class="term-title">Turnaround Time</div>
-                        <div>Total time from arrival to completion</div>
-                        <div class="term-example">Example: Arrival (0) to Completion (7) = 7ms</div>
-                    </div>
-                    <div class="term-card">
-                        <div class="term-title">Response Time</div>
-                        <div>Time until first CPU response</div>
-                        <div class="term-example">Example: Time until process first starts running</div>
-                    </div>
-                    <div class="term-card">
-                        <div class="term-title">Time Quantum</div>
-                        <div>Maximum time slice for Round Robin</div>
-                        <div class="term-example">Example: Each process gets max 4ms</div>
-                    </div>
-                </div>
-            `;
         }
     },
     {

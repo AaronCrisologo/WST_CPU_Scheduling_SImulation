@@ -36,6 +36,10 @@ body {
   overscroll-behavior-y: none;
 }
 
+.bigtitle {
+  color: #8E54E9;
+}
+
 .decorative-circle {
   position: absolute;
   border-radius: 50%;
