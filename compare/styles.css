@@ -19,16 +19,21 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 body {
   font-family: 'Arial', sans-serif;
   background: linear-gradient(135deg, #ff8282 0%, #7aadff 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
   margin: 0;
   padding: 20px;
   transition: background-color 0.3s ease-in-out;
   min-height: 100vh;
   height: 100%;
+  overscroll-behavior-y: none;
 }
 
 .decorative-circle {
@@ -164,7 +169,7 @@ input:focus, select:focus {
 
 /* Button Styles */
 .btn {
-  background-color: #007BFF;
+  background: linear-gradient(45deg, #4776E6, #8E54E9);
   color: #fff;
   padding: 12px 24px;
   border: none;
@@ -175,7 +180,7 @@ input:focus, select:focus {
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background: linear-gradient(45deg, #4776E6, #8E54E9);
   transform: translateY(-3px);
 }
 
@@ -256,7 +261,7 @@ table th, table td {
 }
 
 table th {
-  background-color: #007BFF;
+  background-color: #8494a5;
   color: white;
 }
 
@@ -301,7 +306,7 @@ table tr:hover {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #007bff;
+  background: linear-gradient(45deg, #4776E6, #8E54E9);
   color: white;
   border: none;
   border-radius: 5px;
@@ -310,7 +315,7 @@ table tr:hover {
 }
 
 #goBackButton:hover {
-  background-color: #0056b3;
+  background: linear-gradient(45deg, #3356a7, #693fad);
 }
 
 .algorithm-item {

@@ -374,44 +374,6 @@ const tutorialSteps = [
         }
     },
     {
-        title: "Performance Metrics",
-        text: `How we measure scheduling efficiency:`,
-        visual: () => {
-            return `
-                <div class="terms-grid">
-                    <div class="term-card">
-                        <div class="term-title">Average Waiting Time (AWT)</div>
-                        <div>Total waiting time / Number of processes</div>
-                        <div class="term-example">Lower is better - means less waiting</div>
-                    </div>
-                    <div class="term-card">
-                        <div class="term-title">Average Turnaround Time (ATAT)</div>
-                        <div>Total turnaround time / Number of processes</div>
-                        <div class="term-example">Lower is better - faster completion</div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 15px;">
-                    <div class="term-card">
-                        <div class="term-title">Example Calculation</div>
-                        <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-                            <div>
-                                P1: Wait 0ms<br>
-                                P2: Wait 5ms<br>
-                                P3: Wait 8ms
-                            </div>
-                            <div>
-                                Total Wait: 13ms<br>
-                                AWT = 13/3 = 4.33ms<br>
-                                ATAT = 25/3 = 8.33ms
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-    },
-    {
         title: "Demonstration of CPU scheduling",
         text: `All things you need to know on starting your journey in learning CPU scheduling`,
         visual: () => {

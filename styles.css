@@ -7,6 +7,13 @@
     font-family: system-ui, -apple-system, sans-serif;
 }
 
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 :root {
     --primary-color: #3498db;
     --secondary-color: #2ecc71;
@@ -19,10 +26,14 @@
 body {
     min-height: 100vh;
     background: linear-gradient(135deg, #ff8282 0%, #7aadff 100%);
+    background-attachment: fixed; /* Keeps gradient fixed during scrolling */
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2rem;
+    margin: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: auto; /* Allow vertical scrolling if needed */
 }
 
 
@@ -31,50 +42,63 @@ body {
     background: white;
     padding: 3rem;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    max-height: 40em;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
     width: 90%;
-  }
+    position: relative;
+    overflow: hidden;
+    margin: auto; /* Ensure it's centered */
+    max-height: 60vh; /* Prevent excessive height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-  h1 {
+h1 {
     color: #2d3748;
     font-size: 2.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 0.5rem;
     font-weight: 700;
-  }
+    background: linear-gradient(45deg, #4776E6, #8E54E9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-  .buttons-container {
+.buttons-container {
     display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
 
-  .learn-btn {
+.learn-btn {
     background: linear-gradient(45deg, #00C853, #69F0AE);
     color: white;
     border: none;
-  }
+}
 
-  .simulate-btn {
+.simulate-btn {
     background: linear-gradient(45deg, #4776E6, #8E54E9);
     color: white;
     border: none;
-  }
+}
 
-  .compare-btn {
+.compare-btn {
     background: white;
     color: #4776E6;
     border: 2px solid #4776E6;
-  }
+}
 
-  .decorative-circle {
+.decorative-circle {
     position: absolute;
     border-radius: 50%;
     opacity: 0.1;
-    z-index: -1;
+    z-index: 0;
   }
 
   .circle-1 {
@@ -84,7 +108,7 @@ body {
     top: 10%;
     left: 10%;
   }
-
+  
   .circle-2 {
     width: 300px;
     height: 300px;
@@ -94,17 +118,48 @@ body {
   }
 
   @media (max-width: 768px) {
-    .button {
-      width: 100%;
-      min-width: unset;
-    }
+    
   }
+
+  @media (max-width: 768px) {
+    .landing-page {
+        padding: 2rem;
+        width: 95%;
+    }
+
+    body {
+        padding: 1rem;
+    }
+
+    .landing-page {
+        width: 95%;
+        padding: 2rem;
+        max-height: 95vh;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .buttons-container {
+        gap: 1rem;
+    }
+
+    .button {
+        width: 100%;
+        min-width: unset;
+      }
+}
 
 h2 {
     text-align: center;
     color: var(--text-color);
     font-weight: 600;
     letter-spacing: -0.5px;
+}
+
+h2.gntext{
+    margin-bottom: 50px;
 }
 
 .section-header h3 {
@@ -128,26 +183,57 @@ h2 {
     border-radius: 12px;
 }
 
+.subtitle {
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
 
 .button {
     display: inline-block;
-    padding: 1rem 2rem;
+    width: 100%;
+    max-width: 400px;
+    padding: 1.2rem 2rem;
     font-size: 1.1rem;
     text-decoration: none;
-    border-radius: 10px;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    min-width: 250px;
-  }
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.button:hover::before {
+    left: 0;
+}
 
 .button2 {
     display: inline-block;
     padding: 12px 24px;
     font-size: 1rem;
     border: none;
-    background-color: var(--primary-color);
+    background: linear-gradient(45deg, #4776E6, #8E54E9);
     color: white;
     cursor: pointer;
     border-radius: 8px;
@@ -160,7 +246,7 @@ h2 {
 }
 
 .button2:hover {
-    background-color: #2980b9;
+    background: linear-gradient(45deg, #375bb1, #6c41b3);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -174,6 +260,7 @@ h2 {
     height: 100vh;
     text-align: center;
     background: linear-gradient(135deg, #f5f7fa 0%, #f4f4f9 100%);
+    position: relative;
 }
 
 .landing-page a {
@@ -273,7 +360,7 @@ input:focus, select:focus {
 .metric-value {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #007bff; /* Modern blue accent */
+    color: #4776E6
 }
 
 .process-field {
@@ -409,7 +496,7 @@ table tr:nth-child(even) {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #007bff;
+    background: linear-gradient(45deg, #4776E6, #8E54E9);
     color: white;
     border: none;
     border-radius: 5px;
@@ -419,7 +506,7 @@ table tr:nth-child(even) {
   }
   
   #goBackButton:hover {
-    background-color: #0056b3;
+    background: linear-gradient(45deg, #3356a7, #5b3697);
   }
 
 /* Animation for fading in */
@@ -538,7 +625,7 @@ table tr:nth-child(even) {
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
+    background: linear-gradient(45deg, #4776E6, #8E54E9);
     color: white;
     cursor: pointer;
 }
@@ -562,7 +649,7 @@ table tr:nth-child(even) {
 }
 
 .progress-dot.active {
-    background-color: #007bff;
+    background: linear-gradient(45deg, #4776E6, #8E54E9);
 }
 
 .process-box {
