@@ -44,12 +44,12 @@ Sleek gradients, animations, and high-contrast text ensure a professional and ac
 ## **👨‍🏫 How to Use**
 ### **Prerequisites**
 
-= A web browser (Google Chrome, Mozilla Firefox, or any modern browser).
+- A web browser (Google Chrome, Mozilla Firefox, or any modern browser).
 
 ### **Installation**
 
 1. Clone this Repository
-2. Navigate to the project folder - It is important to target the correct path in order to avoid errors when going through pages
+2. Navigate to the project folder - It is important to target the correct path in order to avoid errors when navigating through pages
 3. Open website.html in your browser
 
 ## **🎬 Usage**
