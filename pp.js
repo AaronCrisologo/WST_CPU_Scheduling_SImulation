@@ -12,19 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
     startScheduling();
 });
 
-// Store user-defined processes
 let processes = [];
 
-// Get elements
 const numProcessesInput = document.getElementById("numProcesses");
 const processFieldsContainer = document.getElementById("processFieldsContainer");
 const ganttChart = document.getElementById("ganttChart");
 const timeline = document.getElementById("timeline");
 const resultsContainer = document.getElementById("resultsContainer");
 const startButton = document.getElementById("startButton");
-const genprocfields = document.getElementById("genprocfields")
+const genprocfields = document.getElementById("genprocfields");
 
-// Generate input fields for each process
 function generateProcessFields() {
     const numProcesses = parseInt(numProcessesInput.value);
     processFieldsContainer.innerHTML = ""; // Clear previous fields
@@ -33,14 +30,41 @@ function generateProcessFields() {
         const processField = document.createElement("div");
         processField.classList.add("process-field");
 
-        processField.innerHTML = `
-            <label>Process ${i} - Arrival Time (s):</label>
-            <input type="number" class="arrivalTime" min="0" value="0" required>
-            <label>Burst Time (s):</label>
-            <input type="number" class="burstTime" min="1" value="1" required>
-            <label>Priority:</label>
-            <input type="number" class="priority" min="1" value="1" required>
-        `;
+        const labelArrival = document.createElement("label");
+        labelArrival.textContent = `Process ${i} - Arrival Time (s):`;
+        const inputArrival = document.createElement("input");
+        inputArrival.type = "number";
+        inputArrival.className = "arrivalTime";
+        inputArrival.min = "0";
+        inputArrival.value = "0";
+        inputArrival.required = true;
+
+        const labelBurst = document.createElement("label");
+        labelBurst.textContent = "Burst Time (s):";
+        const inputBurst = document.createElement("input");
+        inputBurst.type = "number";
+        inputBurst.className = "burstTime";
+        inputBurst.min = "1";
+        inputBurst.value = "1";
+        inputBurst.required = true;
+
+        const labelPriority = document.createElement("label");
+        labelPriority.textContent = "Priority:";
+        const inputPriority = document.createElement("input");
+        inputPriority.type = "number";
+        inputPriority.className = "priority";
+        inputPriority.min = "1";
+        inputPriority.value = "1";
+        inputPriority.required = true;
+
+        // Assemble the field
+        processField.appendChild(labelArrival);
+        processField.appendChild(inputArrival);
+        processField.appendChild(labelBurst);
+        processField.appendChild(inputBurst);
+        processField.appendChild(labelPriority);
+        processField.appendChild(inputPriority);
+
         processFieldsContainer.appendChild(processField);
     }
 
@@ -52,8 +76,6 @@ function generateProcessFields() {
     startButton.style.display = numProcesses > 0 ? 'block' : 'none';
 }
 
-
-// Start scheduling with user-defined processes
 function startScheduling() {
     processes = [];
     ganttChart.innerHTML = ""; // Clear previous Gantt chart
@@ -81,6 +103,7 @@ function startScheduling() {
             name: `P${i + 1}`,
             arrivalTime: arrivalTime,
             burstTime: burstTime,
+            priority: priority,
             remainingTime: burstTime, // Keep track of remaining burst time
             priority: priority,
             endTime: 0,
@@ -94,7 +117,6 @@ function startScheduling() {
     preemptivePriorityScheduling();
 }
 
-// Preemptive Priority Scheduling Algorithm
 function preemptivePriorityScheduling() {
     let currentTime = 0;
     const executionOrder = [];
@@ -163,34 +185,39 @@ function preemptivePriorityScheduling() {
     calculateAndDisplayAverages(processes);
 }
 
-// Display results in a table
+// Safe DOM-based results rendering
 function displayResults() {
     const table = document.createElement("table");
-    table.innerHTML = `
-        <tr>
-            <th>Process</th>
-            <th>Arrival Time</th>
-            <th>Burst Time</th>
-            <th>Priority</th>
-            <th>End Time</th>
-            <th>Turnaround Time</th>
-            <th>Waiting Time</th>
-        </tr>
-    `;
+    const header = document.createElement("tr");
+    const headers = ["Process", "Arrival Time", "Burst Time", "Priority", "End Time", "Turnaround Time", "Waiting Time"];
+    headers.forEach(txt => {
+        const th = document.createElement("th");
+        th.textContent = txt;
+        header.appendChild(th);
+    });
+    table.appendChild(header);
+
     processes.forEach((process) => {
         const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${process.name}</td>
-            <td>${process.arrivalTime}</td>
-            <td>${process.burstTime}</td>
-            <td>${process.priority}</td>
-            <td>${process.endTime}</td>
-            <td>${process.turnaroundTime}</td>
-            <td>${process.waitingTime}</td>
-        `;
+        const cells = [
+            process.name,
+            process.arrivalTime,
+            process.burstTime,
+            process.priority,
+            process.endTime,
+            process.turnaroundTime,
+            process.waitingTime
+        ];
+        cells.forEach(val => {
+            const td = document.createElement("td");
+            td.textContent = val;
+            row.appendChild(td);
+        });
         table.appendChild(row);
     });
 
+    // Replace previous output
+    resultsContainer.innerHTML = '';
     resultsContainer.appendChild(table);
 }
 

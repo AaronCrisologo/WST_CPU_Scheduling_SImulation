@@ -16,12 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedAlgorithms = [];
   var iterator = 0;
 
-    // Function to toggle time quantum visibility
-    function toggleTimeQuantumVisibility() {
-      const isRRSelected = selectedAlgorithms.includes('rr');
-      timequantumdisplay1.style.display = isRRSelected ? 'block' : 'none';
-      timequantumdisplay.style.display = isRRSelected ? 'block' : 'none';
-    }
+  // Function to toggle time quantum visibility
+  function toggleTimeQuantumVisibility() {
+    const isRRSelected = selectedAlgorithms.includes('rr');
+    timequantumdisplay1.style.display = isRRSelected ? 'block' : 'none';
+    timequantumdisplay.style.display = isRRSelected ? 'block' : 'none';
+  }
 
   function generateProcessFields() {
     const numProcesses = parseInt(document.getElementById('numProcesses').value, 10);
@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsContainer.innerHTML = '';
     chartContainer.innerHTML = '';
 
-    timequantumdisplay1.style.display = 'block'
-    timequantumdisplay.style.display = 'block'
+    timequantumdisplay1.style.display = 'block';
+    timequantumdisplay.style.display = 'block';
     toggleTimeQuantumVisibility();
 
     for (let i = 0; i < numProcesses; i++) {
@@ -46,22 +46,23 @@ document.addEventListener('DOMContentLoaded', () => {
       processFormContainer.innerHTML += processForm;
       iterator += 1;
     }
-    compareBtn.style.display = selectedAlgorithms.length > 1 ? 'block' : 'none';
+    compareBtn.style.display = iterator > 0 && selectedAlgorithms.length > 1 ? 'block' : 'none';
+    toggleTimeQuantumVisibility();
   }
 
   function addAlgorithmToCompare() {
     const selectedAlgorithm = algorithmSelect.value;
-  
+
     if (!selectedAlgorithms.includes(selectedAlgorithm)) {
       selectedAlgorithms.push(selectedAlgorithm);
-  
+
       const listItem = document.createElement('li');
       listItem.classList.add('algorithm-item');
-  
+
       const algorithmName = document.createElement('span');
       algorithmName.textContent = selectedAlgorithm.toUpperCase();
       algorithmName.classList.add('algorithm-name');
-  
+
       const removeBtn = document.createElement('button');
       removeBtn.textContent = '✖';
       removeBtn.classList.add('remove-btn');
@@ -73,16 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
         compareBtn.style.display = selectedAlgorithms.length > 1 ? 'block' : 'none';
         toggleTimeQuantumVisibility();
       };
-  
+
       listItem.appendChild(algorithmName);
       listItem.appendChild(removeBtn);
       algorithmList.appendChild(listItem);
     }
-  
+
     compareBtn.style.display = iterator > 0 && selectedAlgorithms.length > 1 ? 'block' : 'none';
     toggleTimeQuantumVisibility();
   }
-  
 
   function compareAlgorithms() {
     const timeQuantum = parseInt(document.getElementById('timeQuantum').value, 10);
@@ -177,47 +177,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const completed = [];
     const queue = [];
     const remaining = processes.map(p => ({ ...p, remainingTime: p.burstTime }));
-    
+
     while (remaining.length > 0 || queue.length > 0) {
-      // Add processes that have arrived by the current time to the queue
       while (remaining.length > 0 && remaining[0].arrivalTime <= currentTime) {
         queue.push(remaining.shift());
       }
-  
+
       if (queue.length > 0) {
         const process = queue.shift();
         const timeToRun = Math.min(process.remainingTime, timeQuantum);
-        
-        currentTime += timeToRun; // Simulate process execution
+
+        currentTime += timeToRun;
         process.remainingTime -= timeToRun;
-  
-        // Check for processes that arrived during execution
+
         while (remaining.length > 0 && remaining[0].arrivalTime <= currentTime) {
           queue.push(remaining.shift());
         }
-  
+
         if (process.remainingTime === 0) {
           const endTime = currentTime;
           const turnaroundTime = endTime - process.arrivalTime;
           const waitingTime = turnaroundTime - process.burstTime;
-          completed.push({ 
-            ...process, 
-            endTime, 
-            turnaroundTime, 
-            waitingTime 
+          completed.push({
+            ...process,
+            endTime,
+            turnaroundTime,
+            waitingTime
           });
         } else {
-          // Re-add process to the queue if it's not finished
           queue.push(process);
         }
       } else if (remaining.length > 0) {
-        // If the queue is empty but there are remaining processes, jump to the next arrival time
         currentTime = remaining[0].arrivalTime;
       }
     }
-  
+
     return completed;
-  }  
+  }
 
   function calculateNPP(processes) {
     let currentTime = 0;
@@ -258,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (readyQueue.length > 0) {
         readyQueue.sort((a, b) => a.priority - b.priority || a.remainingTime - b.remainingTime);
         const process = readyQueue.shift();
-        const timeToRun = 1; // Simulating preemption at every unit time
+        const timeToRun = 1;
         process.remainingTime -= timeToRun;
         currentTime += timeToRun;
 
@@ -290,12 +286,11 @@ document.addEventListener('DOMContentLoaded', () => {
       waitingTime: 0,
       completionTime: 0
     }));
-  
+
     while (completed < n) {
-      // Find the process with the shortest remaining time at the current time
       let shortest = -1;
       let minRemainingTime = Infinity;
-  
+
       for (let i = 0; i < n; i++) {
         if (
           processes[i].arrivalTime <= currentTime &&
@@ -306,34 +301,63 @@ document.addEventListener('DOMContentLoaded', () => {
           shortest = i;
         }
       }
-  
+
       if (shortest === -1) {
-        // No process is ready, advance the time
         currentTime++;
         continue;
       }
-  
-      // Execute the process with the shortest remaining time for 1 unit of time
+
       remainingTime[shortest]--;
       currentTime++;
-  
-      // Check if the process is completed
+
       if (remainingTime[shortest] === 0) {
         completed++;
         const completionTime = currentTime;
         results[shortest].completionTime = completionTime;
-        results[shortest].turnaroundTime =
-          completionTime - processes[shortest].arrivalTime;
-        results[shortest].waitingTime =
-          results[shortest].turnaroundTime - processes[shortest].burstTime;
+        results[shortest].turnaroundTime = completionTime - processes[shortest].arrivalTime;
+        results[shortest].waitingTime = results[shortest].turnaroundTime - processes[shortest].burstTime;
       }
     }
-  
-    return results;
-  }  
 
+    return results;
+  }
+
+  // Safe DOM rendering for results
   function displayResults(results) {
-    // Define a mapping for shorthand acronyms to full names
+    // Minimum averages for highlighting
+    let minTurnaroundTime = Infinity;
+    let minWaitingTime = Infinity;
+    const avgTurnaroundTimes = {};
+    const avgWaitingTimes = {};
+
+    // Calculate averages
+    Object.keys(results).forEach(algorithm => {
+      const totalTurnaround = results[algorithm].reduce((sum, p) => sum + p.turnaroundTime, 0);
+      const totalWaiting = results[algorithm].reduce((sum, p) => sum + p.waitingTime, 0);
+      const avgTurnaround = totalTurnaround / results[algorithm].length;
+      const avgWaiting = totalWaiting / results[algorithm].length;
+      avgTurnaroundTimes[algorithm] = avgTurnaround;
+      avgWaitingTimes[algorithm] = avgWaiting;
+
+      if (avgTurnaround < minTurnaroundTime) minTurnaroundTime = avgTurnaround;
+      if (avgWaiting < minWaitingTime) minWaitingTime = avgWaiting;
+    });
+
+    // Build table safely
+    const table = document.createElement('table');
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    ['Algorithm', 'Average Turnaround Time', 'Average Waiting Time'].forEach(txt => {
+      const th = document.createElement('th');
+      th.textContent = txt;
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+
     const algorithmFullNames = {
       fcfs: 'First-Come, First-Served (FCFS)',
       sjf: 'Shortest Job First (SJF)',
@@ -342,62 +366,36 @@ document.addEventListener('DOMContentLoaded', () => {
       srtf: 'Shortest Remaining Time First (SRTF)',
       pp: 'Preemptive Priority (PP)'
     };
-  
-    // Find the minimum average turnaround time and waiting time across all algorithms
-    let minTurnaroundTime = Infinity;
-    let minWaitingTime = Infinity;
-    let avgTurnaroundTimes = {};
-    let avgWaitingTimes = {};
-  
-    // Calculate the average turnaround time and waiting time for each algorithm
+
     Object.keys(results).forEach(algorithm => {
-      const totalTurnaroundTime = results[algorithm].reduce((sum, p) => sum + p.turnaroundTime, 0);
-      const totalWaitingTime = results[algorithm].reduce((sum, p) => sum + p.waitingTime, 0);
-      const avgTurnaround = totalTurnaroundTime / results[algorithm].length;
-      const avgWaiting = totalWaitingTime / results[algorithm].length;
-  
-      avgTurnaroundTimes[algorithm] = avgTurnaround;
-      avgWaitingTimes[algorithm] = avgWaiting;
-  
-      if (avgTurnaround < minTurnaroundTime) {
-        minTurnaroundTime = avgTurnaround;
+      const row = document.createElement('tr');
+
+      const nameCell = document.createElement('td');
+      nameCell.textContent = algorithmFullNames[algorithm.replace(/Results$/, '')];
+      row.appendChild(nameCell);
+
+      const turnaroundCell = document.createElement('td');
+      const waitingCell = document.createElement('td');
+      const avgTurnaround = avgTurnaroundTimes[algorithm].toFixed(2);
+      const avgWaiting = avgWaitingTimes[algorithm].toFixed(2);
+      turnaroundCell.textContent = avgTurnaround;
+      waitingCell.textContent = avgWaiting;
+
+      if (avgTurnaround === minTurnaroundTime.toFixed(2)) {
+        turnaroundCell.style.backgroundColor = 'green';
       }
-      if (avgWaiting < minWaitingTime) {
-        minWaitingTime = avgWaiting;
+      if (avgWaiting === minWaitingTime.toFixed(2)) {
+        waitingCell.style.backgroundColor = 'green';
       }
+
+      row.appendChild(turnaroundCell);
+      row.appendChild(waitingCell);
+      tbody.appendChild(row);
     });
-  
-    // Generate the table
-    resultsContainer.innerHTML = `
-      <table>
-        <thead>
-          <tr>
-            <th>Algorithm</th>
-            <th>Average Turnaround Time</th>
-            <th>Average Waiting Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${Object.keys(results).map(algorithm => `
-            <tr>
-              <td>${algorithmFullNames[algorithm.replace(/Results$/, '')]}</td>
-              <td ${avgTurnaroundTimes[algorithm] === minTurnaroundTime ? 'style="background-color: green;"' : ''}>
-                ${avgTurnaroundTimes[algorithm].toFixed(2)}
-              </td>
-              <td ${avgWaitingTimes[algorithm] === minWaitingTime ? 'style="background-color: green;"' : ''}>
-                ${avgWaitingTimes[algorithm].toFixed(2)}
-              </td>
-            </tr>`).join('')}
-        </tbody>
-      </table>`;
+
+    table.appendChild(tbody);
+    // Clear previous output and insert new table
+    resultsContainer.innerHTML = '';
+    resultsContainer.appendChild(table);
   }
-  
-  
-});
-
-const goBackButton = document.getElementById("goBackButton");
-
-goBackButton.addEventListener("click", () => {
-    // Navigate back to the landing page
-    window.location.href = "../website.html";
 });

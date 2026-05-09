@@ -12,19 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
     startScheduling();
 });
 
-// Store user-defined processes
 let processes = [];
 
-// Get elements
 const numProcessesInput = document.getElementById("numProcesses");
 const processFieldsContainer = document.getElementById("processFieldsContainer");
 const ganttChart = document.getElementById("ganttChart");
 const timeline = document.getElementById("timeline");
 const resultsContainer = document.getElementById("resultsContainer");
 const startButton = document.getElementById("startButton");
-const genprocfields = document.getElementById("genprocfields")
+const genprocfields = document.getElementById("genprocfields");
 
-// Generate input fields for each process
 function generateProcessFields() {
     const numProcesses = parseInt(numProcessesInput.value);
     processFieldsContainer.innerHTML = ""; // Clear previous fields
@@ -52,8 +49,6 @@ function generateProcessFields() {
     startButton.style.display = numProcesses > 0 ? 'block' : 'none';
 }
 
-
-// Start scheduling with user-defined processes
 function startScheduling() {
     processes = [];
     ganttChart.innerHTML = ""; // Clear previous Gantt chart
@@ -93,11 +88,10 @@ function startScheduling() {
     priorityScheduling();
 }
 
-// Non-Preemptive Priority Scheduling Algorithm
 function priorityScheduling() {
     let currentTime = 0;
-    const executionOrder = []; // Array to keep track of execution order
-    const completed = []; // Track completed processes
+    const executionOrder = [];
+    const completed = [];
 
     while (completed.length < processes.length) {
         // Filter out processes that have already arrived and are not completed
@@ -141,39 +135,39 @@ function priorityScheduling() {
     calculateAndDisplayAverages(processes);
 }
 
-// Display results in a table
+// Safe DOM-based results rendering
 function displayResults() {
     const table = document.createElement("table");
-    table.innerHTML = `
-        <tr>
-            <th>Process</th>
-            <th>Arrival Time</th>
-            <th>Burst Time</th>
-            <th>Priority</th>
-            <th>End Time</th>
-            <th>Turnaround Time</th>
-            <th>Waiting Time</th>
-        </tr>
-    `;
+    const header = document.createElement("tr");
+    const headers = ["Process", "Arrival Time", "Burst Time", "Priority", "End Time", "Turnaround Time", "Waiting Time"];
+    headers.forEach(txt => {
+        const th = document.createElement("th");
+        th.textContent = txt;
+        header.appendChild(th);
+    });
+    table.appendChild(header);
+
     processes.forEach((process) => {
         const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${process.name}</td>
-            <td>${process.arrivalTime}</td>
-            <td>${process.burstTime}</td>
-            <td>${process.priority}</td>
-            <td>${process.endTime}</td>
-            <td>${process.turnaroundTime}</td>
-            <td>${process.waitingTime}</td>
-        `;
+        const cells = [
+            process.name,
+            process.arrivalTime,
+            process.burstTime,
+            process.priority,
+            process.endTime,
+            process.turnaroundTime,
+            process.waitingTime
+        ];
+        cells.forEach(val => {
+            const td = document.createElement("td");
+            td.textContent = val;
+            row.appendChild(td);
+        });
         table.appendChild(row);
     });
 
     resultsContainer.appendChild(table);
 }
 
-// Event listener to generate process input fields when the user changes the number of processes
 genprocfields.addEventListener("click", generateProcessFields);
-
-// Event listener for the start button
 startButton.addEventListener("click", startScheduling);
