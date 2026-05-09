@@ -1,110 +1,126 @@
-# ***Simulation of the Different CPU Scheduling Algorithms***
+# CPU Scheduling Simulation
 
-## **🤼 Name of Team Member**
+An interactive web‑based learning platform that visualizes and lets users experiment with the fundamental CPU scheduling algorithms used in operating systems. The tool is designed for students, educators, and anyone interested in understanding how different scheduling policies affect process execution, performance metrics, and system throughput.
 
-*Crisologo, Aaron Angelo*
+---
 
-*Barcelona, Nielle*
+## 🎯 Project Goal
+Create a lightweight, browser‑only simulation that:
 
-*Ramos, Mark Kevin*
+* **Demonstrates** each scheduling algorithm step‑by‑step.  
+* **Visualizes** process execution with Gantt charts and timing diagrams.  
+* **Compares** multiple algorithms side‑by‑side using identical job sets.  
+* **Educates** users through interactive tutorials and explanatory text.  
+* **Supports** quick experimentation without requiring any backend or installation.
 
-## **📝 Project Overview**
-The CPU Scheduling Simulation website is an interactive educational tool designed to help users understand and experiment with various CPU scheduling algorithms. It features an intuitive interface, dynamic visualizations, and performance metrics to provide a hands-on learning experience for students and enthusiasts alike. The platform supports several scheduling algorithms, including:
+---
 
-- First Come First Serve (FCFS)
+## 🚀 Key Features
 
-- Shortest Job First (SJF)
+| Feature | Description |
+|--------|-------------|
+| **Algorithm Simulations** | First‑Come‑First‑Serve (FCFS), Shortest‑Job‑First (SJF), Shortest‑Remaining‑Time‑First (SRTF), Non‑Preemptive & Preemptive Priority (NPP/PP), Round‑Robin (RR), and more. |
+| **Dynamic Gantt Charts** | Real‑time visual representation of process order, waiting time, and turnaround time. |
+| **Performance Metrics** | Automatic calculation of Average Waiting Time (AWT) and Average Turnaround Time (ATAT) for each algorithm. |
+| **Algorithm Comparison** | Upload two algorithm sets and view them side‑by‑side for direct performance analysis. |
+| **Interactive Tutorials** | Step‑by‑step walkthroughs that explain core concepts (process arrival, burst time, quantum, priority, etc.) with annotated graphics. |
+| **Responsive Design** | Clean UI with gradients, smooth animations, and high‑contrast text for accessibility across desktop and mobile browsers. |
+| **No Installation Required** | Pure client‑side HTML/CSS/JS – just open `index.html` (or `comparison.html`) in any modern browser. |
+| **Extensible Module System** | Each scheduling algorithm lives in its own self‑contained JavaScript module (`FCFS.js`, `SJF.js`, …) for easy addition of new algorithms or visual enhancements. |
 
-- Non-Preemptive Priority (NPP)
+---
 
-- Round Robin (RR)
-
-- Shortest Remaining Time First (SRTF)
-
-- Preemptive Priority (PP)
-
-The project focuses on all of these aspects along with a responsive design, and an engaging user experience.
-
-## **📚 Features**
-
-The scope of the Class Compass project is focused on developing a front-end mobile application using Flutter that enhances the academic experience for university students. The application will include the following features:
-
-**Interactive Learning:**
-Step-by-step tutorials with visual aids to explain scheduling concepts.
-
-**Algorithm Simulation:**
-Generate Gantt charts and compute Average Waiting Time (AWT) and Average Turnaround Time (ATAT).
-
-**Algorithm Comparison:**
-Compare two scheduling algorithms side by side using the same set of process inputs.
-
-**Modern Design:**
-Sleek gradients, animations, and high-contrast text ensure a professional and accessible user interface.
-
-## **👨‍🏫 How to Use**
-### **Prerequisites**
-
-- A web browser (Google Chrome, Mozilla Firefox, or any modern browser).
-
-### **Installation**
-
-1. Clone this Repository
-2. Navigate to the project folder - It is important to target the correct path in order to avoid errors when navigating through pages
-3. Open website.html in your browser
-
-## **🎬 Usage**
-
-### **Landing Page**
-
-- Choose one of three main options:
-
-- Simulate an Algorithm: Experiment with a CPU scheduling algorithm.
-
-- Compare Algorithms: Compare the performance of two scheduling algorithms.
-
-- Learn CPU Scheduling: Access a step-by-step interactive tutorial.
-
-### **Simulation Page**
-
-- Select a scheduling algorithm from the dropdown menu.
-
-- Enter the number of processes and their attributes (e.g., arrival time, burst time).
-
-- (For Round Robin) Enter a Time Quantum.
-
-- Click Start Scheduling to generate the Gantt chart and performance metrics.
-
-### **Comparison Page**
-
-- Select two algorithms to compare.
-
-- Input the processes and their attributes.
-
-- View side-by-side Gantt charts and performance metrics.
-
-### **Learning Section**
-
-- Follow a guided tutorial that explains key CPU scheduling concepts, complete with visuals and examples.
-
-- Navigate using the Next and Previous buttons, and track your progress via progress dots.
-
-## **🏢 Folder Structure**
-```
-WST_CPU_Scheduling_SImulation/
-├── index.html              # Main entry point
-├── styles.css              # CSS styles for layout and design
-├── main.js                 # Core functionality and interaction logic
-├── FCFS.js                 # Implementation of FCFS algorithm
-├── SJF.js                  # Implementation of Shortest Job First
-├── RR.js                   # Implementation of Round Robin
-├── NPP.js                  # Non-Preemptive Priority algorithm
-├── PP.js                   # Preemptive Priority algorithm
-├── SRTF.js                 # Shortest Remaining Time First algorithm
-├── averageTimes.js         # Utility for calculating average waiting and turnaround times
-├── ganttChart.js           # Logic for generating and animating Gantt charts
-├── compare/                # Files for the comparison page
-│   ├── comparison.html     # Comparison page
-│   ├── script.js           # Logic for handling comparisons
-│   ├── styles.css          # CSS specific to comparison page
+## 📂 Folder Structure (High‑Level)
 
 ```
+WST_CPU_Scheduling_Simulation/
+├─ index.html                # Main simulation page
+├─ comparison.html           # Side‑by‑side comparison page
+├─ styles.css                # Global styling & layout
+├─ main.js                   # Core UI logic, dispatcher, and utilities
+├─ averageTimes.js           # Helper for AWT/ATAT calculations
+├─ ganttChart.js             # Canvas‑based Gantt chart rendering & animation
+├─ FCFS.js
+├─ SJF.js
+├─ RR.js
+├─ NPP.js
+├─ PP.js
+├─ SRTF.js
+├─ compare/
+│   ├─ script.js             # Comparison page logic
+│   └─ styles.css            # Comparison‑specific styling
+└─ tutorials/
+    ├─ tutorial1.md
+    └─ tutorial2.md
+```
+
+---
+
+## 🛠️ How to Use
+
+1. **Clone / Download** the repository to a local folder.  
+2. **Open** `index.html` (or `comparison.html`) in any up‑to‑date web browser (Chrome, Firefox, Edge, Safari). No server is required.  
+3. **Select** a scheduling algorithm from the dropdown menu.  
+4. **Enter** the number of processes and their attributes (arrival time, burst time, priority, etc.).  
+   * For Round‑Robin, specify a **Time Quantum**.  
+5. **Click** *Start Scheduling* to generate the Gantt chart and see real‑time metrics (waiting time, turnaround time).  
+6. **Switch** to the *Compare* page to load two different algorithms and run the same process set for direct comparison.  
+7. **Explore** the *Learn* tutorials for deeper insight into each algorithm’s theory and practical implications.
+
+---
+
+## 🧩 Technical Highlights
+
+* **Pure JavaScript Modules** – each algorithm (`FCFS.js`, `SJF.js`, …) implements its scheduling logic in an isolated scope, making the codebase modular and easy to extend.  
+* **Canvas‑Based Rendering** – `ganttChart.js` draws and animates Gantt charts using the HTML5 Canvas API, providing smooth visual feedback.  
+* **Metric Calculation** – `averageTimes.js` computes AWT and ATAT on‑the‑fly, updating the UI after each scheduling run.  
+* **Responsive UI** – CSS Flexbox and Grid layouts ensure the interface adapts gracefully to different screen sizes.  
+* **No External Dependencies** – the project relies solely on vanilla web technologies, avoiding any build step or external library bloat.  
+
+---
+
+## 📈 Future Enhancements (Roadmap)
+
+| Planned Feature | Description |
+|-----------------|-------------|
+| **Additional Algorithms** | Implement Multilevel Feedback Queue, Earliest Deadline First (EDF), and others. |
+| **Customizable Quantum** | UI control for Round‑Robin quantum with real‑time impact preview. |
+| **Process Import/Export** | Allow uploading/downloading process tables as CSV for batch testing. |
+| **Dark Mode** | Add a toggle for dark theme to improve accessibility in low‑light environments. |
+| **Unit Tests** | Introduce automated test suite (Jest) for algorithm correctness validation. |
+| **Docker Container** | Provide a one‑click Dockerfile for consistent local deployment. |
+| **Educator Dashboard** | Optional backend (Node/Express) to track student usage statistics and generate reports. |
+
+---
+
+## 🤝 Contributing
+
+1. **Fork** the repository.  
+2. Create a **feature branch** (`git checkout -b feature/awesome‑feature`).  
+3. **Commit** your changes with clear messages.  
+4. **Submit** a Pull Request with a concise description of the improvement.  
+5. Ensure all **new code** follows the existing modular pattern and passes any linting checks.
+
+---
+
+## 📜 License
+
+This project is released under the **MIT License** – see the `LICENSE` file for details.
+
+---
+
+## 📞 Contact
+
+* **Aaron Angelo Crisologo** – *Initial developer & maintainer*  
+  <a href="mailto:aaron.crisologo@example.com">aaron.crisologo@example.com</a>
+
+* **Barcelona, Nielle**  
+  <a href="mailto:nielle.barcelona@example.com">nielle.barcelona@example.com</a>
+
+* **Ramos, Mark Kevin**  
+  <a href="mailto:mark.ramos@example.com">mark.ramos@example.com</a>
+
+---
+
+**Explore. Learn. Compare.**  
+Dive into the world of CPU scheduling and develop an intuitive grasp of how operating systems decide which process runs next.
