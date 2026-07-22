@@ -109,18 +109,5 @@ This project is released under the **MIT License** – see the `LICENSE` file fo
 
 ---
 
-## 📞 Contact
-
-* **Aaron Angelo Crisologo** – *Initial developer & maintainer*  
-  <a href="mailto:aaron.crisologo@example.com">aaron.crisologo@example.com</a>
-
-* **Barcelona, Nielle**  
-  <a href="mailto:nielle.barcelona@example.com">nielle.barcelona@example.com</a>
-
-* **Ramos, Mark Kevin**  
-  <a href="mailto:mark.ramos@example.com">mark.ramos@example.com</a>
-
----
-
 **Explore. Learn. Compare.**  
 Dive into the world of CPU scheduling and develop an intuitive grasp of how operating systems decide which process runs next.
