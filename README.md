@@ -93,16 +93,6 @@ WST_CPU_Scheduling_Simulation/
 
 ---
 
-## 🤝 Contributing
-
-1. **Fork** the repository.  
-2. Create a **feature branch** (`git checkout -b feature/awesome‑feature`).  
-3. **Commit** your changes with clear messages.  
-4. **Submit** a Pull Request with a concise description of the improvement.  
-5. Ensure all **new code** follows the existing modular pattern and passes any linting checks.
-
----
-
 ## 📜 License
 
 This project is released under the **MIT License** – see the `LICENSE` file for details.
